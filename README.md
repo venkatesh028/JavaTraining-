@@ -1,2 +1,2 @@
-# JavaTraning-
+# JavaTraining-
 Java programs
