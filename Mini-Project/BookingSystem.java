@@ -15,10 +15,10 @@ public class BookingSystem {
     static String[] movies = new String[totalNoOfScreen];
 
     /**
-     * Method getInfo will print the tickets booked in that particular screen
+     * Print the tickets booked in that particular screen
      * And also print the balance tickets in that particular screen
      */ 
-    public static void getInfo(int screenNumber) {
+    public static void getAndDisplay(int screenNumber) {
 	System.out.println("In Screen " + screenNumber + " "
 			        + seatsBooked[screenNumber - 1] 
 				+ " Tickets Are Booked");
@@ -27,7 +27,7 @@ public class BookingSystem {
     }
     
     /**
-     * Method login takes the admin to his page 
+     * Takes the admin to his page 
      * where he can ADD SCREENS, add seats, add ticket price 
      * and updte changes in future
      */  
@@ -35,12 +35,12 @@ public class BookingSystem {
 	int isLogout = 1;
 	int screenForUpdate;
 	int action;
-    	final static int ADD = 1;
-	final static int ADD_EXTRA_SEAT = 2;
-	final static int UPDATEMOVIE = 3;
-	final static int UPDATEPRICE = 4;
-	final static int TICKETSINFO = 5;
-	final static int LOGOUT = 6;
+	final int ADD = 1;
+	final int ADD_EXTRA_SEAT = 2;
+	final int UPDATEMOVIE = 3;
+	final int UPDATEPRICE = 4;
+	final int TICKETSINFO = 5;
+	final int LOGOUT = 6;
 
     	/* while condition run until admin select LOGOUT option */
 	while (isLogout != 0) {
@@ -95,7 +95,7 @@ public class BookingSystem {
 	
 	    case TICKETSINFO:
 		System.out.print("Enter Screen Number To get number Tickets are Booked :");
-		getInfo(scanner.nextInt());                                                            
+		getAndDisplay(scanner.nextInt());                                                            
 		break;
 
 	    case LOGOUT:
@@ -109,7 +109,7 @@ public class BookingSystem {
     } 
     
     /** 
-     * This method book the tickets and print the screen number to the user
+     * Book the tickets and print the screen number to the user
      * By getting the screen selected by the user 
      * And number of ticket asked by the user as a parameter 
      * Then updateing the seats booked for that screen
@@ -125,14 +125,14 @@ public class BookingSystem {
     }
     
     /** 
-     * This method calculate the totatl price amount
+     * Calculate the totatl price amount
      * By getting the price of ticket for the screen selected by the user
      */
     public static int calculateTotalPrice(int selected, int count) {
 	return cost[selected-1] * count;		
     }
     
-    /** This method return true or false based on availability */
+    /** Return true or false based on availability */
     public static boolean ticketsAvailabilityCheck (int selected, int count) {
 	int countAvailable;
 	countAvailable = seats[selected - 1] - seatsBooked[selected - 1];
@@ -144,7 +144,7 @@ public class BookingSystem {
 	} 
     }
     
-    /* This method open the user dashboard */
+    /* open the user dashboard */
     public static void userDashboard() {
 	int selected;
 	int count;
@@ -166,7 +166,7 @@ public class BookingSystem {
 	        totalCost = calculateTotalPrice(selected,count);
 		scanner.nextLine();
 	        System.out.print("The Total Cost is " + totalCost + " Conform by 'yes' : ");
-	        conformation = (scanner.nextLine()).toLowerCase(); 
+	        conformation = scanner.nextLine(); 
 	        if (conformation.equalsIgnoreCase("yes")) {
 		    bookTickets(selected,count);
 	        } else {
