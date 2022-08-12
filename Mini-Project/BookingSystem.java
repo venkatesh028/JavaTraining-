@@ -23,8 +23,7 @@ public class BookingSystem {
 			        + seatsBooked[screenNumber - 1] 
 				+ " Tickets Are Booked");
 	System.out.println("Balance " 
-				+ ((seats[screenNumber - 1]) 
-				- (seatsBooked[screenNumber - 1])));
+				+ ((seats[screenNumber - 1]) - (seatsBooked[screenNumber - 1])));
     }
     
     /**
@@ -36,7 +35,7 @@ public class BookingSystem {
 	int isLogout = 1;
 	int screenForUpdate;
 	int action;
-	final static int ADD = 1;
+    	final static int ADD = 1;
 	final static int ADD_EXTRA_SEAT = 2;
 	final static int UPDATEMOVIE = 3;
 	final static int UPDATEPRICE = 4;
@@ -49,7 +48,6 @@ public class BookingSystem {
 			         + " '3' For Updateing Movie '4' For Updateing The Price"
 				 + " '5' To See How Many Tickets are Booked '6' For Logout : ");
 	    action = scanner.nextInt();
-	    
 	    switch (action) {
 	    case ADD:
 	        System.out.print("Enter the Number of Screens you need to add :");
@@ -95,7 +93,7 @@ public class BookingSystem {
 		cost[screenForUpdate-1] = scanner.nextInt();		
 		break;
 	
-	    case TICKETINFO:
+	    case TICKETSINFO:
 		System.out.print("Enter Screen Number To get number Tickets are Booked :");
 		getInfo(scanner.nextInt());                                                            
 		break;
@@ -185,9 +183,9 @@ public class BookingSystem {
     public static void main(String[] args) {
 	int dashboard;
 	int appRunning = 1;
-	final static int USER = 1;
-	final static int ADMIN = 2;
-	final static int QUIT = 3;
+	final int USER = 1;
+	final int ADMIN = 2;
+	final int QUIT = 3;
 	System.out.print("Welcom To The Booking App....");
 	
 	while(appRunning != 0) {
