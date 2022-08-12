@@ -51,8 +51,6 @@ public class BookingSystem {
 	    action = scanner.nextInt();
 	    
 	    switch (action) {
-            
-            /** Getting the details about the screen */
 	    case ADD:
 	        System.out.print("Enter the Number of Screens you need to add :");
 		activeScreen = scanner.nextInt();                                                           
@@ -72,11 +70,7 @@ public class BookingSystem {
 		}
 		isOpen = 1; 
 		break;
-            
-            /**
-             * This case is updates the number of seats in particular screen 
-             * By getting screen number from the admin
-             */
+
 	    case ADD_EXTRA_SEAT:
 		int extraSeats;
 		System.out.print("Enter Screen Number For What You Need To Add Extra Seats : ");
@@ -86,10 +80,6 @@ public class BookingSystem {
 		seats[screenForUpdate-1] = seats[screenForUpdate-1] + extraSeats; 
 		break;
 	    
-	    /** 
-	     * This case will update the movie in that particular screen
-             * By getting the movie name from the admin
-             */
 	    case UPDATEMOVIE:
 		System.out.print("Enter The Screen Number For What You Need To UPDATE MOVIE : ");
 		screenForUpdate = scanner.nextInt();
@@ -98,30 +88,18 @@ public class BookingSystem {
 		movies[screenForUpdate-1] = scanner.nextLine();
 		break;
 
-	    
-	    /**
-             * This case is update the ticket price for particular screen
-             * By getting the  from the admin
-             */
 	    case UPDATEPRICE:
 		System.out.print("Enter Screen Number To Update Price : ");
 		screenForUpdate = scanner.nextInt();
 		System.out.print("Enter the New Price : ");
 		cost[screenForUpdate-1] = scanner.nextInt();		
 		break;
-
-	    /** 
-             * This case is shows the number of tickets booked in particular screen
-             * By getting the screen number from the admin
-	     */	
+	
 	    case TICKETINFO:
 		System.out.print("Enter Screen Number To get number Tickets are Booked :");
 		getInfo(scanner.nextInt());                                                            
 		break;
 
-	    /** 
-             * This is case log out the admin 
-             */
 	    case LOGOUT:
 		isLogout = 0;
 		break;
@@ -156,7 +134,7 @@ public class BookingSystem {
 	return cost[selected-1] * count;		
     }
     
-    /* This method return true or false based on availability */
+    /** This method return true or false based on availability */
     public static boolean ticketsAvailabilityCheck (int selected, int count) {
 	int countAvailable;
 	countAvailable = seats[selected - 1] - seatsBooked[selected - 1];
