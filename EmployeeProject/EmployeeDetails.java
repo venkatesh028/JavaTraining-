@@ -9,6 +9,7 @@ public class EmployeeDetails {
     private String  name;
     private int     experince;
     private double  salary;
+    
 
     public String getName() {
 	return name;
