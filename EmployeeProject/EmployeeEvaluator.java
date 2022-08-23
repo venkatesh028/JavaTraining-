@@ -71,7 +71,7 @@ public class EmployeeEvaluator {
 	    experience[index] = employeeDetails[index].getExperience();
 	} 
 	Arrays.sort(experience, Collections.reverseOrder());
-
+        System.out.println(Arrays.toString(experience));
 	for (int index = 0; index < employeeCount; index++) {
 	    for (int index_j = 0; index_j < employeeCount; index_j++) {
 	        if (experience[index] == employeeDetails[index_j].getExperience()) {

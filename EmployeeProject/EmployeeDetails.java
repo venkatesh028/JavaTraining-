@@ -7,16 +7,21 @@
  */
 public class EmployeeDetails {	
     private String  name;
-    private int     experince;
+    private int     experience;
     private double  salary;
     
+    public EmployeeDetails(String name, int experience, double salary) {
+        this.name = name;
+        this.experience = experience;
+        this.salary = salary;
+    }
 
     public String getName() {
 	return name;
     }
     
     public int getExperience() {
-	return experince;
+	return experience;
     }
 
     public double getSalary() {
@@ -27,8 +32,8 @@ public class EmployeeDetails {
 	this.name = name;
     }
     
-    public void setExperience(int experince) {
-	this.experince = experince;
+    public void setExperience(int experience) {
+	this.experience = experience;
     }
   
     public void setSalary(double salary) {

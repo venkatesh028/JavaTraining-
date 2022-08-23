@@ -13,12 +13,17 @@ public class EmployeeController {
 	Scanner scanner = new Scanner(System.in);                                      
         EmployeeEvaluator employeeEvaluator = new EmployeeEvaluator();               
 	int employeeCount;
+        String employeeName;
+        int experience;
+        double salary;
 	System.out.print("Enter the Number of Employee You are going to enter : ");
 	employeeCount = scanner.nextInt();                                              
-	EmployeeDetails[] employeeDetails = new EmployeeDetails[employeeCount]; 
+	EmployeeDetails[] employeeDetails = new EmployeeDetails[employeeCount];
+ 
 	String[] names = new String[10]; 
 	String name;
-	int action;	
+	int action;
+	
 	boolean isContinue = true;
 	final int GET_EXPERIENCED_EMPLOYEE = 1;
         final int GET_EMPLOYEE_ABOVE_1LAKHS = 2;
@@ -29,27 +34,28 @@ public class EmployeeController {
          
 	for (int index = 0; index < employeeCount; index++) {
 	    scanner.nextLine();
-            employeeDetails[index] = new EmployeeDetails();
+            //employeeDetails[index] = new EmployeeDetails();
 	    System.out.print("Enter employee Name : ");
-	    employeeDetails[index].setName(scanner.nextLine());
+	    employeeName = scanner.nextLine();
 	    System.out.print("Enter employee experince : ");
-	    employeeDetails[index].setExperience(scanner.nextInt());
+	    experience = scanner.nextInt();
 	    System.out.print("Enter employee salary : ");
-	    employeeDetails[index].setSalary(scanner.nextDouble());
+	    salary = scanner.nextDouble();
+            employeeDetails[index] = new EmployeeDetails(employeeName, experience, salary);
+         
 	}
         
         StringBuilder statement = new StringBuilder();
-        statement.append("Enter ").append(GET_EXPERIENCED_EMPLOYEE);
-                 .append(GET_EXPERIENCED_EMPLOYEE);
-                 .append(" for experienced employee ");
-                 .append(GET_EMPLOYEE_ABOVE_1LAKHS);
-                 .append(" for above 1lakhs salary ");
-                 .append(GET_TOP_EXPERIENCED_EMPLOYEE);
-                 .append(" for top experienced employee " );
-                 .append(GET_HIGHEST_PAID_EMPLOYEE);  
-                 .append(" for Highest paid employee "); 
-                 .append(GET_HIGHEST_EXPERIENCED_EMPLOYEE );       
-                 .append(" for Highest Experienced");       
+        statement.append("Enter ").append(GET_EXPERIENCED_EMPLOYEE)
+                 .append(" for experienced employee ")
+                 .append(GET_EMPLOYEE_ABOVE_1LAKHS)
+                 .append(" for above 1lakhs salary ")
+                 .append(GET_TOP_EXPERIENCED_EMPLOYEE)
+                 .append(" for top experienced employee ")
+                 .append(GET_HIGHEST_PAID_EMPLOYEE)  
+                 .append(" for Highest paid employee ") 
+                 .append(GET_HIGHEST_EXPERIENCED_EMPLOYEE)       
+                 .append(" for Highest Experienced")       
                  .append(" employee ").append(QUIT).append(" to quit : ");                
 
 	while (isContinue) {
