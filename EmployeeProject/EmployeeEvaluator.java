@@ -33,7 +33,7 @@ public class EmployeeEvaluator {
     }
 
     /** 
-     * Return array of employees name 
+     * Get array of employees name 
      * whose salary is 1 lakhs and above
      * 
      * @param {@link EmployeeDetails} employeeDetails
@@ -41,7 +41,7 @@ public class EmployeeEvaluator {
      * @return list of names
      */	
     public String[] getEmployeeSalaryAbove1Lakh(EmployeeDetails[] employeeDetails, 
-                                           int employeeCount) {
+                                                    int employeeCount) {
 	filterCount = 0;
 	for (int index = 0; index < employeeCount; index++) {
 	    if (100000 <= employeeDetails[index].getSalary()) {
@@ -63,7 +63,7 @@ public class EmployeeEvaluator {
      * @return list of names
      */
     public String[] getTopExperiencedEmployees(EmployeeDetails[] employeeDetails,
-                                     int employeeCount) {
+                                                   int employeeCount) {
 	filterCount = 0;
 	Integer[] experience = new Integer[employeeCount];
 	for (int index = 0; index < employeeCount; index++) {

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * class EmployeeController get the infromation from the user
+ * Get the infromation from the user
  * and store the details in the EmployeeDetails class
  * Then perform evaluation based on the user choice and print the result
  *
@@ -37,20 +37,29 @@ public class EmployeeController {
 	    System.out.print("Enter employee salary : ");
 	    employeeDetails[index].setSalary(scanner.nextDouble());
 	}
+        
+        StringBuilder statement = new StringBuilder();
+        statement.append("Enter ").append(GET_EXPERIENCED_EMPLOYEE);
+                 .append(GET_EXPERIENCED_EMPLOYEE);
+                 .append(" for experienced employee ");
+                 .append(GET_EMPLOYEE_ABOVE_1LAKHS);
+                 .append(" for above 1lakhs salary ");
+                 .append(GET_TOP_EXPERIENCED_EMPLOYEE);
+                 .append(" for top experienced employee " );
+                 .append(GET_HIGHEST_PAID_EMPLOYEE);  
+                 .append(" for Highest paid employee "); 
+                 .append(GET_HIGHEST_EXPERIENCED_EMPLOYEE );       
+                 .append(" for Highest Experienced");       
+                 .append(" employee ").append(QUIT).append(" to quit : ");                
 
 	while (isContinue) {
-	    System.out.print("Enter "+ GET_EXPERIENCED_EMPLOYEE +" for experienced employee " 
-                                  + GET_EMPLOYEE_ABOVE_1LAKHS + " for above 1lakhs salary " 
-                                  + GET_TOP_EXPERIENCED_EMPLOYEE + " for top experienced employee " 
-                                  + GET_HIGHEST_PAID_EMPLOYEE + " for Highest paid employee " 
-                                  + GET_HIGHEST_EXPERIENCED_EMPLOYEE + " for Highest Experienced" 
-				  + " employee " + QUIT + " to quit : ");
+	    System.out.print(statement);
 	    action = scanner.nextInt(); 
 	
 	    switch (action) {
 	    case GET_EXPERIENCED_EMPLOYEE:
 	        names = employeeEvaluator.getExperiencedEmployee(employeeDetails,
-                                                                      employeeCount);
+                                                                     employeeCount);
 
 	        for (int index = 0; index < employeeEvaluator.filterCount; index++) {
 	            System.out.println(names[index]);
@@ -59,7 +68,7 @@ public class EmployeeController {
 	    
 	    case GET_EMPLOYEE_ABOVE_1LAKHS:
 	        names = employeeEvaluator.getEmployeeSalaryAbove1Lakh(employeeDetails,
-                                                                 employeeCount);
+                                                                          employeeCount);
 
 	        for (int index = 0; index < employeeEvaluator.filterCount; index++) {
 	            System.out.println(names[index]);
