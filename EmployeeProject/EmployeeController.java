@@ -99,7 +99,7 @@ public class EmployeeController {
 		isContinue = false;
 		break;
 
-            default:
+              default:
  		System.out.println("You entered wrong option");
 
 	    }
