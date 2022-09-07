@@ -5,12 +5,12 @@
  * @version 1.0 19 Aug 2022
  * @author  Venkatesh TM
  */
-public class EmployeeDetails {	
+public class EmployeeModel {	
     private String  name;
     private int     experience;
     private double  salary;
     
-    public EmployeeDetails(){}
+    public EmployeeDetails() {}
 
     public EmployeeDetails(String name, int experience, double salary) {
         this.name = name;

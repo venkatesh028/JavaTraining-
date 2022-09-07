@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,10 +20,9 @@ public class EmployeeController {
         double salary;
 	System.out.print("Enter the Number of Employee You are going to enter : ");
 	employeeCount = scanner.nextInt();                                              
-	EmployeeDetails[] employeeDetails = new EmployeeDetails[employeeCount]; 
+	EmployeeDetails employeeDetail = new EmployeeDetails();         
         List<EmployeeDetails> employeeDetails = new ArrayList<>();
-	String[] names = new String[10]; 
-	String name;
+        List<String> names = new ArrayList<>(); 
 	int action;	
 	boolean isContinue = true;
 	final int GET_EXPERIENCED_EMPLOYEE = 1;
@@ -39,21 +40,10 @@ public class EmployeeController {
 	    experience = scanner.nextInt();
 	    System.out.print("Enter employee salary : ");
 	    salary = scanner.nextDouble();
-            employeeDetails[index] = new EmployeeDetails(employeeName, experience, salary);
-         
+            employeeDetail = new EmployeeDetails(employeeName, experience, salary);
+            employeeDetails.add(employeeDetail);       
 	}        
-        StringBuilder statement = new StringBuilder();
-        statement.append("Enter ").append(GET_EXPERIENCED_EMPLOYEE)
-                 .append(" for experienced employee ")
-                 .append(GET_EMPLOYEE_ABOVE_1LAKHS)
-                 .append(" for above 1lakhs salary ")
-                 .append(GET_TOP_EXPERIENCED_EMPLOYEE)
-                 .append(" for top experienced employee ")
-                 .append(GET_HIGHEST_PAID_EMPLOYEE)  
-                 .append(" for Highest paid employee ") 
-                 .append(GET_HIGHEST_EXPERIENCED_EMPLOYEE)       
-                 .append(" for Highest Experienced")       
-                 .append(" employee ").append(QUIT).append(" to quit : ");                
+               
 
 	while (isContinue) {
 	    System.out.print(statement);
@@ -64,8 +54,8 @@ public class EmployeeController {
 	        names = employeeEvaluator.getExperiencedEmployee(employeeDetails,
                                                                      employeeCount);
                  
-	        for (int index = 0; index < employeeEvaluator.filterCount; index++) {
-	            System.out.println(names[index]);
+	        for (String name : names) {
+	            System.out.println(name);
 	        }
 		break;
 	    
@@ -73,8 +63,8 @@ public class EmployeeController {
 	        names = employeeEvaluator.getEmployeeSalaryAbove1Lakh(employeeDetails,
                                                                           employeeCount);
 
-	        for (int index = 0; index < employeeEvaluator.filterCount; index++) {
-	            System.out.println(names[index]);
+	        for (String name : names) {
+	            System.out.println(name);
 	        }
 		break;
 
@@ -82,21 +72,24 @@ public class EmployeeController {
 		names = employeeEvaluator.getTopExperiencedEmployees(employeeDetails,
                                                                          employeeCount);
 
-		for (int index = 0; index < (employeeCount / 2); index++) {
-		    System.out.println(names[index]);
+		for (int index = 0; index < (names.size()/2); index++) {
+		    System.out.println(names.get(index));
 		}
 		break;
 
 	    case GET_HIGHEST_PAID_EMPLOYEE:
-		name = employeeEvaluator.getHighestPaidName(employeeDetails, employeeCount);
-		System.out.println(name);
+                names = employeeEvaluator.getHighestPaidName(employeeDetails, employeeCount);
+		
+	        for (String name : names) {
+	            System.out.println(name);
+	        }
 		break;
 
 	    case GET_HIGHEST_EXPERIENCED_EMPLOYEE:
 		names = employeeEvaluator.getTopExperiencedEmployees(employeeDetails,
                                                                          employeeCount);
-		System.out.println(names[0]);
-		break;
+		System.out.println(names.get(0));
+		break; 
 
 	    case QUIT:
 		isContinue = false;

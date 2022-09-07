@@ -2,14 +2,14 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * This class evaluvate the values by getting details from the EmployeeDetails
+ * Evaluvate the values by getting details from the EmployeeDetails
  * class and EmployyeeController  
  *
  * @version 1.0 19 Aug 2022
  * @author  Venkatesh TM
  */
 public class EmployeeEvaluator {
-    int filterCount;
+    private int filterCount;
     String[] names = new String[10];
     
     /**
@@ -29,7 +29,6 @@ public class EmployeeEvaluator {
 		filterCount++;
 	    }
 	}
-	
 	return names;	
     }
 
@@ -83,14 +82,14 @@ public class EmployeeEvaluator {
     }
   
     /**
-     * Takes the employee salary then arrange that in descending oreder
+     * Takes the employee salary sort based on there condition 
      * Then get their names and stored in the names array
      * by comparing with salary
      * Return the name to the controller
      *
      * @param {@link EmployeeDetails} employeeDetails
      * @param {@link int} employeeCount
-     * @return name at zero index
+     * @return highest paid employee Name
      */
     public String getHighestPaidName(EmployeeDetails[] employeeDetails,
                                          int employeeCount) {
