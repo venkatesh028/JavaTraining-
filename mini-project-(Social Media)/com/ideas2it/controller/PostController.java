@@ -38,7 +38,7 @@ public class PostController {
      * @return boolean true if the post is added successfully or else false
      * /
     public boolean addPost(String email, String quotes) {
-        return postService.addPost(email,quotes);   
+        return postService.addPost(email, quotes);   
     }
     
     /** 
@@ -49,7 +49,7 @@ public class PostController {
      * @return boolean    true if the like is added else flase
      */
     public boolean addLike(String email, int postNumber) {
-        return postService.addLike(email,postNumber);    
+        return postService.addLike(email, postNumber);    
     }
     
     /**
@@ -60,7 +60,7 @@ public class PostController {
      * @param  postNumber post number of the particular post
      * @return boolena    true if the comment is added else false
      */ 
-    public boolean addComment(String email,String comment ,int postNumber) {
-        return postService.addComment(email,comment,postNumber) ;   
+    public boolean addComment(String email, String comment ,int postNumber) {
+        return postService.addComment(email, comment, postNumber) ;   
     }
 }

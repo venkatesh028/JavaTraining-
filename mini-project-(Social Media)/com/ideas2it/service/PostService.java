@@ -20,32 +20,14 @@ public class PostService {
     private Post post;
     
     /**
-     * It build the format of the post to show in the view page
-     * 
-     * @return postView it gives the post in the particular format
-     */   
-    private String postBuilder() {
-        StringBuilder postView = new StringBuilder();
-
-        for (Map.Entry<String,List<Post>> contents : userPost.entrySet()) {
-            for (int index = 0; index < contents.getValue().size(); index++) {
-                postView.append(contents.getKey())
-                        .append(contents.getValue().get(index));       
-            }                                            
-        }
-        
-        return postView.toString();
-    }
-    
-    /**
      * Add comment on the particular post of the particular user with the postNumber
      *
      * @param  email      email of the user belongs to that post 
      * @parma  comment    comment need to be added
      * @param  postNumber post number of the particular post
-     * @return boolena    true if the comment is added else false 
+     * @return boolean    true if the comment is added else false 
      */
-    public boolean addComment(String email, String comment,int postNumber) {
+    public boolean addComment(String email, String comment, int postNumber) {
         List<Post> postOfUser = userPost.get(email);
         for (int index = 0; index < postOfUser.size(); index++) {
             Post post = postOfUser.get(index);
@@ -82,37 +64,47 @@ public class PostService {
      * @param  email      email of the user belongs to that post 
      * @parma  comment    comment need to be added
      * @param  postNumber post number of the particular post
-     * @return boolena    true if the comment is added else false
+     * @return boolean    true if the comment is added else false
      */
     public boolean addPost(String email, String quotes) {
+
         if (userPost.containsKey(email)) { 
             int postNumber = userPost.get(email).size();           
-            Post temporaryPost = new Post(postNumber+1,quotes);
+            Post temporaryPost = new Post(postNumber+1, quotes);
             listOfPost.add(temporaryPost);
-            userPost.put(email,listOfPost);   
+            userPost.put(email, listOfPost);   
         } else {
             listOfPost = new ArrayList<>();
             int postNumber = 1;
-            Post temporaryPost = new Post(postNumber,quotes);
+            Post temporaryPost = new Post(postNumber, quotes);
             listOfPost.add(temporaryPost);
-            userPost.put(email,listOfPost);             
+            userPost.put(email, listOfPost);             
         }        
         return true;                                            
     }   
 
     /**
-     * Check the post are available or not 
+     * Shows the post to the user in the certain foramt 
      *
-     * @return boolean true if the post is available else false
+     * @return postForamt shows the post to user in certain format
      */
     public String showPost() {
-        return postBuilder();    
+        StringBuilder postFormat = new StringBuilder();
+
+        for (Map.Entry<String,List<Post>> contents : userPost.entrySet()) {
+            for (int index = 0; index < contents.getValue().size(); index++) {
+                postView.append(contents.getKey())
+                        .append(contents.getValue().get(index));       
+            }                                            
+        }
+        
+        return postFormat.toString();  
     }
 
     /** 
-     * Shows the post 
+     * Check is the list of post is empty or not 
      *
-     * @return postService.showPost() gets the post uploaded
+     * @return boolean true if it is not empty else fasle
      */
     public boolean isPostEmpty () {
         if (userPost.isEmpty()) {

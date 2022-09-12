@@ -21,8 +21,8 @@ public class UserController {
      * @param  user     details of the user
      * @return boolean  true if account is created successfully else false
      */
-    public boolean createAccount(String key,User user){
-        return userService.createAccount(key,user);
+    public boolean createAccount(String key, User user){
+        return userService.createAccount(key, user);
     }
    
     /**
@@ -42,8 +42,8 @@ public class UserController {
      * @param  password password of the user
      * @return boolean  true if the credentials are valid else false
      */
-    public boolean isValidCredentials(String email,String password) {
-        return userService.isValidCredentials(email,password);
+    public boolean isValidCredentials(String email, String password) {
+        return userService.isValidCredentials(email, password);
     }
     
     /**
@@ -76,13 +76,4 @@ public class UserController {
         return userService.deleteAccount(email);
     }
     
-    /** 
-     */     
-    public boolean addComment() {
-        return true;
-    }
-    
-    public boolean addLike() {
-        return true;
-    }
 }

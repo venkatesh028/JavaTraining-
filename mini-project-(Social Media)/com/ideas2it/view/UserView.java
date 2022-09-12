@@ -36,9 +36,8 @@ public class UserView {
             System.out.print("Enter your password : ");
             password = scanner.next();
  
-            if (userController.isAccountExist(email)) {
-                System.out.println("Chekiung");                
-                if (userController.isValidCredentials(email,password)) {
+            if (userController.isAccountExist(email)) {               
+                if (userController.isValidCredentials(email, password)) {
                     System.out.println("entry done");
                     feedView.showNewsFeed(email);
                 } else {

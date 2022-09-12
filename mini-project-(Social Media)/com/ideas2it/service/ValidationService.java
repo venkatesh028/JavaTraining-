@@ -31,7 +31,7 @@ public class ValidationService {
      * @return boolean true if the format is correct or false
      */ 
     public boolean isValidEmail(String email) {        
-        return isValid(email,emailFormat);         
+        return isValid(email, emailFormat);         
     }
 
     /**
@@ -41,7 +41,7 @@ public class ValidationService {
      * @return boolean true if the format is correct or false
      */     
     public boolean isValidPassword(String password) {
-        return isValid(password,passwordFormat);
+        return isValid(password, passwordFormat);
     }
     
 }
