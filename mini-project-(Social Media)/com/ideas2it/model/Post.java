@@ -3,6 +3,17 @@ package com.ideas2it.model;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Contain the attributes of the Post
+ * Constructor is used to initialize the attributes
+ * Getter and setter method is used to update and retrive the attributes
+ * toString method is used to return the values
+ *
+ * @version 1.0 09-SEP-2022
+ * @author Venkatesh Tm
+ */
+ 
+
 public class Post {
     String quotes;
     int like = 0;
