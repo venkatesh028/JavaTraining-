@@ -58,7 +58,7 @@ public class PostController {
      * @param  email      email of the user belongs to that post 
      * @parma  comment    comment need to be added
      * @param  postNumber post number of the particular post
-     * @return boolena    true if the comment is added else false
+     * @return boolean    true if the comment is added else false
      */ 
     public boolean addComment(String email, String comment ,int postNumber) {
         return postService.addComment(email, comment, postNumber) ;   
