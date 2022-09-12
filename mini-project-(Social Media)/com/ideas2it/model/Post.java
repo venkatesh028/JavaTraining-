@@ -1,13 +1,20 @@
-package com.ides2it.model;
+package com.ideas2it.model;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Post {
     String quotes;
     int like = 0;
-    int postNumber = 0;
-    ArrayList<String> comments = new ArrayList<>();
+    int postNumber;
     
+    List<String> comments = new ArrayList<>();
+   
+    public Post (int postNumber, String quotes)  {
+        this.postNumber = postNumber;
+        this.quotes = quotes;
+    }
+
     public String getQuotes() {
         return quotes;
     }
@@ -16,14 +23,14 @@ public class Post {
         return like;
     }
     
-    public ArrayList<String> getComments() {
+    public List<String> getComments() {
         return comments;
     }
     
     public int getPostNumber() {
         return postNumber;
     }
-    
+ 
     public void setQuotes(String quotes) {
         this.quotes = quotes;
     }
@@ -38,5 +45,11 @@ public class Post {
     
     public void setPostNumber() {
         postNumber++;
+    }
+    
+    public String toString() {
+        return  "\n"+postNumber +" ) " + quotes
+               +"\n Likes : " + like 
+               +"\n Comments:  " + comments;
     }
 }

@@ -2,6 +2,7 @@ package com.ideas2it.view;
 
 import com.ideas2it.controller.UserController;
 import com.ideas2it.model.User;
+import com.ideas2it.view.FeedView;
 
 import java.util.Scanner;
 
@@ -14,8 +15,10 @@ import java.util.Scanner;
  *
  */
 public class UserView {
-    UserController userController = new UserController();
-    Scanner scanner = new Scanner(System.in);
+
+    private UserController userController = new UserController();
+    private FeedView feedView = new FeedView();
+    private Scanner scanner = new Scanner(System.in);
     
     /** 
      * Gets the emailId and password from the user
@@ -37,6 +40,7 @@ public class UserView {
                 System.out.println("Chekiung");                
                 if (userController.isValidCredentials(email,password)) {
                     System.out.println("entry done");
+                    feedView.showNewsFeed(email);
                 } else {
                     System.out.println("Invalid password try again ");
                 }                   
@@ -48,7 +52,7 @@ public class UserView {
     } 
     
     /**
-     * get the datails from the user
+     * Get the datails from the user
      * and pass the data to the validation and based on result
      * the account is created
      */
@@ -86,8 +90,9 @@ public class UserView {
         }    
         user = new User(name,email,password);
   
-        if (userController.createAccount(email,user)) {
+        if (userController.createAccount(email,user)) {           
             System.out.println("Account Created Succesfully");
+            feedView.showNewsFeed(email);
         } else {
             System.out.println("This email Id is alredy exist");
         }                          
