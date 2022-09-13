@@ -36,7 +36,7 @@ public class PostController {
      * @param  email   email  of the particular user
      * @param  quotes  quotes quotes entered by the user
      * @return boolean true if the post is added successfully or else false
-     * /
+     */
     public boolean addPost(String email, String quotes) {
         return postService.addPost(email, quotes);   
     }

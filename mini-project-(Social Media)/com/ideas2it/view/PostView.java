@@ -14,17 +14,17 @@ public class PostView {
     private PostController postController = new PostController();
     private Scanner  scanner = new Scanner(System.in);
     
-    /**
+    /** 
      * Add the post by getting the quotes form the user
-     *
-     * @param email  email of the person who is uploading the post
-     * /
+     * 
+     * @param email email of the person who is uploading the post
+     */ 
     public void addPost(String email) {
         String quotes;
         scanner.nextLine();
         System.out.print("Enter your quotes : ");
         quotes = scanner.nextLine();
-        if (postController.addPost(email, quotes)){
+        if (postController.addPost(email, quotes)) {
             System.out.println("Post added Successfully");
         }        
     }

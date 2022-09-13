@@ -93,7 +93,7 @@ public class PostService {
 
         for (Map.Entry<String,List<Post>> contents : userPost.entrySet()) {
             for (int index = 0; index < contents.getValue().size(); index++) {
-                postView.append(contents.getKey())
+                postFormat.append(contents.getKey())
                         .append(contents.getValue().get(index));       
             }                                            
         }
