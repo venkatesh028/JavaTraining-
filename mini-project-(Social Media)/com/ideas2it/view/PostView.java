@@ -11,8 +11,17 @@ import java.util.Scanner;
  * @author Venkatesh TM
  */ 
 public class PostView {
-    private PostController postController = new PostController();
-    private Scanner  scanner = new Scanner(System.in);
+    private PostController postController;
+    private Scanner scanner;
+   
+    /**
+     * Creates a new object for the PostView and initialize the feilds
+     * of that class
+     */ 
+    public PostView() {
+        this.postController = new PostController();
+        this.scanner = new Scanner(System.in);
+    }
     
     /** 
      * Add the post by getting the quotes form the user
@@ -71,6 +80,7 @@ public class PostView {
         final int LIKE = 2;
         final int COMMENT = 3;
         final int EXIT = 4;
+
         statement.append("Enter ").append(ADDPOST).append(" to add post ")
                  .append(LIKE).append(" to add like ").append(COMMENT)
                  .append(" to add comment ").append(EXIT)

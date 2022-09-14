@@ -1,11 +1,12 @@
 package com.ideas2it.service;
 
-import com.ideas2it.model.User;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
+
+import com.ideas2it.model.User;
+import com.ideas2it.util.ValidationUtil;
 
 /**
  * Perform the create, delete ,change  and validation
@@ -15,19 +16,39 @@ import java.util.HashSet;
  * @version 1.0 08-SEP-2022
  */
 public class UserService {
-    private Map<String,User> users = new HashMap<>();
-    private Set<String> userNames = new HashSet<>();
-    private Set<String> emails = new HashSet<>();
-    private Map<String,String> loginCredentials = new HashMap<>();
+    private Map<String,User> users;
+    private Set<String> userNames;
+    private Set<String> emails;
+    private Map<String,String> loginCredentials;
     private User user;
-    
-    
+    private ValidationUtil validationUtil;
+
+    private String emailFormat;
+    private String passwordFormat;
+
+    /**
+     * Creates a new object for the UserService and initialize the feilds
+     * of that class
+     */
+    public UserService() {
+        this.users = new HashMap<>();
+        this.userNames = new HashSet<>();
+        this.emails = new HashSet<>();
+        this.loginCredentials = new HashMap<>();
+        this.validationUtil = new ValidationUtil();
+        this.emailFormat = "^[a-zA-Z0-9][a-zA-Z0-9.]{3,30}@"
+                           + "[a-zA-Z0-9][a-zA-Z0-9.]{3,}$";
+        this.passwordFormat = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])"
+                                     + "(?=.*[@#$%^&+=])" 
+                                     + "(?=\\S+$).{8,20}$";
+    }
+
     /**
      * Add a account to the map with email as a key
      * 
-     * @param  key  email of the user 
-     * @param  user Details of the uer
-     * @return true after adding the user details
+     * @param  userName username of the user 
+     * @param  user     Details of the uer
+     * @return true     after adding the user details
      */
     public boolean createAccount(String userName, User user) {
         users.put(userName,user);
@@ -40,8 +61,8 @@ public class UserService {
     /**
      * Delete the Account of the user based on the email
      *
-     * @param  email   email of the user 
-     * @return boolean true if the account is deleted else false 
+     * @param  userName UserName of the user 
+     * @return boolean  true if the account is deleted else false 
      */
     public boolean deleteAccount(String userName) {
         user = users.get(userName);        
@@ -54,7 +75,7 @@ public class UserService {
     /** 
      * Change the email of the user
      * 
-     * @param  oldEmail old email of the user 
+     * @param  userName userName of the user 
      * @param  newEmail new email of the user
      * @return boolean  true if the changes is successfully updated
      */
@@ -68,7 +89,7 @@ public class UserService {
     /**
      * Change the name of the user 
      *
-     * @param  email   email of the user
+     * @param  userName   UserName of the user
      * @param  newName new name entered by the user
      * @return boolean true after changeing the name successfully
      */
@@ -77,7 +98,11 @@ public class UserService {
         user.setName(newName);
         return true;
     }
-    
+
+    /**
+     * Change the userName of the user
+     * 
+     * @param 
     public boolean changeUserName(String userName, String newUserName) {
         user = users.remove(userName);
         users.put(newUserName, user);
@@ -132,7 +157,7 @@ public class UserService {
     }
     
     /**
-     * Check is the given UserName is already if not it will get added
+     * Check is the given UserName is already exist
      * 
      * @param  userName UserName given by the user
      * @return boolean  true if the username added successfully else false
@@ -140,8 +165,22 @@ public class UserService {
     public boolean isUsernameExist(String userName) {
         return userNames.contains(userName);        
     }
-    
+
+    /**
+     * Check is the given email is already exist
+     * 
+     * @param  email   email given by the user
+     * @return boolean true if the username added successfully else false
+     */
     public boolean isEmailExist(String email) {
         return emails.contains(email);
+    }
+    
+    public boolean isValidEmail(String email) {
+        return validationUtil.isValid(email,emailFormat);
+    }
+    
+    public boolean isValidPassword(String password) {
+        return validationUtil.isValid(password,passwordFormat);
     }
 }

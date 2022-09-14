@@ -1,7 +1,6 @@
 package com.ideas2it.controller;
 
 import com.ideas2it.service.UserService;
-import com.ideas2it.service.ValidationService;
 import com.ideas2it.model.User;
 
 /**
@@ -11,8 +10,15 @@ import com.ideas2it.model.User;
  * @author Venkatesh TM
  */
 public class UserController {
-    private UserService userService = new UserService();
-    private ValidationService validationService = new ValidationService();
+    private UserService userService;
+    
+    /**
+     * Creates a new object for the UserController and initialize the feilds
+     * of that class
+     */
+    public UserController() {
+        this.userService = new UserService();
+    }
     
     /**
      * Create new account for the user
@@ -53,7 +59,7 @@ public class UserController {
      * @return boolean true if the eamil is valid else false
      */
     public boolean isValidEmail(String email) {
-        return validationService.isValidEmail(email);
+        return userService.isValidEmail(email);
     }
     
     /**
@@ -63,7 +69,7 @@ public class UserController {
      * @return boolean  true if the password is valid
      */   
     public boolean isValidPassword(String password) {
-        return validationService.isValidPassword(password);
+        return userService.isValidPassword(password);
     }
      
     /**

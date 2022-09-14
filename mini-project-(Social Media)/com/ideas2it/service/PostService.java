@@ -9,8 +9,6 @@ import java.util.Set;
 
 import com.ideas2it.model.Post;
 
-
-
 /** 
  * Perform the add functionality for post ,like and comment 
  * and also the create a post format to view
@@ -19,10 +17,19 @@ import com.ideas2it.model.Post;
  * @author Venkatesh TM
  */
 public class PostService {
-    private Map<String, List<Post>> userPost = new HashMap<>();
-    private List<Post> listOfPost = new ArrayList<>();
+    private Map<String, List<Post>> userPost;
+    private List<Post> listOfPost;
     private Post post;
-    
+
+    /**
+     * Creates a new object for the PostService and initialize the feilds
+     * of that class
+     */    
+    public PostService() {
+        this.userPost = new HashMap<>();
+        this.listOfPost = new ArrayList<>();
+    }
+
     /**
      * Add comment on the particular post of the particular user with the postNumber
      *

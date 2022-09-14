@@ -6,9 +6,18 @@ import com.ideas2it.view.PostView;
 import java.util.Scanner;
 
 public class FeedView {
-    private PostView postView = new PostView();
+    private PostView postView;
    // private ProfileView profileView = new ProfileView();
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+
+    /**
+     * Creates a new object for the FeedView and initialize the feilds
+     * of that class
+     */    
+    public FeedView() {
+        this.postView = new PostView();
+        this.scanner = new Scanner(System.in);
+    }
     
     public void showNewsFeed(String userName) {
         int action;

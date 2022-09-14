@@ -23,6 +23,10 @@ public class Post {
     Set<String> likedUsers = new HashSet<>();
     List<String> comments = new ArrayList<>();
    
+    /**
+     * Creates a new object for the Post and initialize the feilds
+     * of that class
+     */
     public Post (int postNumber, String quotes)  {
         this.postNumber = postNumber;
         this.quotes = quotes;

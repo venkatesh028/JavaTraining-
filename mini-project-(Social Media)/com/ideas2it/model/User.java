@@ -16,7 +16,11 @@ public class User {
  
     public User() {
     }
-   
+
+    /**
+     * Creates a new object for the User and initialize the feilds
+     * of that class
+     */   
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;

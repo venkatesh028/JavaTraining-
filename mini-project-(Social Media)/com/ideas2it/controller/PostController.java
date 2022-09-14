@@ -10,7 +10,15 @@ import com.ideas2it.service.PostService;
  * @author Venkstesh TM
  */
 public class PostController {
-    private PostService postService = new PostService();
+    private PostService postService;
+
+    /**
+     * Creates a new object for the PostController and initialize the feilds
+     * of that class
+     */    
+    public PostController () {
+        this.postService = new PostService();
+    }
     
     /**
      * Check the post are available or not 
