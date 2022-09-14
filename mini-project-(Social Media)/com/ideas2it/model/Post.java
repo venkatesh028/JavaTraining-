@@ -2,6 +2,8 @@ package com.ideas2it.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Contain the attributes of the Post
@@ -18,7 +20,7 @@ public class Post {
     String quotes;
     int like = 0;
     int postNumber;
-    
+    Set<String> likedUsers = new HashSet<>();
     List<String> comments = new ArrayList<>();
    
     public Post (int postNumber, String quotes)  {
@@ -34,6 +36,10 @@ public class Post {
         return like;
     }
     
+    public Set<String> getLikedUsers() {
+        return likedUsers;
+    }
+
     public List<String> getComments() {
         return comments;
     }
@@ -50,6 +56,14 @@ public class Post {
         like++;
     }
     
+    public void setUnlike() {
+        like--;
+    }
+    
+    public void setLikedUsers(String likedUserName) {
+        likedUsers.add(likedUserName);
+    }
+
     public void setComment(String comment) {
         comments.add(comment);
     }

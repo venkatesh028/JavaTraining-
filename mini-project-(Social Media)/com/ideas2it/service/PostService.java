@@ -1,11 +1,15 @@
 package com.ideas2it.service;
 
-import com.ideas2it.model.Post;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+
+
+import com.ideas2it.model.Post;
+
+
 
 /** 
  * Perform the add functionality for post ,like and comment 
@@ -27,8 +31,8 @@ public class PostService {
      * @param  postNumber post number of the particular post
      * @return boolean    true if the comment is added else false 
      */
-    public boolean addComment(String email, String comment, int postNumber) {
-        List<Post> postOfUser = userPost.get(email);
+    public boolean addComment(String userName, String comment, int postNumber) {
+        List<Post> postOfUser = userPost.get(userName);
         for (int index = 0; index < postOfUser.size(); index++) {
             Post post = postOfUser.get(index);
             if (post.getPostNumber() == postNumber) {
@@ -46,12 +50,20 @@ public class PostService {
      * @param  postNumber postNumber of that particular post
      * @return boolean    true if the like is added else flase
      */ 
-    public boolean addLike(String email, int postNumber) {
-        List<Post> postOfUser = userPost.get(email);
+    public boolean addLike(String likedUserName, String userNameOfPost, 
+                                                 int postNumber) {
+        List<Post> postOfUser = userPost.get(userNameOfPost);
+        Set<String> likedUsers;
         for (int index = 0; index < postOfUser.size(); index++) {
             Post post = postOfUser.get(index);
             if (post.getPostNumber() == postNumber) {
-                post.setLike();
+                likedUsers = post.getLikedUsers();
+                if (! likedUsers.contains(likedUserName)) {
+                    post.setLike();
+                    post.setLikedUsers(likedUserName);
+                } else {
+                    post.setUnlike();
+                }                
                 return true;
             } 
         }    
@@ -66,19 +78,19 @@ public class PostService {
      * @param  postNumber post number of the particular post
      * @return boolean    true if the comment is added else false
      */
-    public boolean addPost(String email, String quotes) {
+    public boolean addPost(String userName, String quotes) {
 
-        if (userPost.containsKey(email)) { 
-            int postNumber = userPost.get(email).size();           
+        if (userPost.containsKey(userName)) { 
+            int postNumber = userPost.get(userName).size();           
             Post temporaryPost = new Post(postNumber+1, quotes);
             listOfPost.add(temporaryPost);
-            userPost.put(email, listOfPost);   
+            userPost.put(userName, listOfPost);   
         } else {
             listOfPost = new ArrayList<>();
             int postNumber = 1;
             Post temporaryPost = new Post(postNumber, quotes);
             listOfPost.add(temporaryPost);
-            userPost.put(email, listOfPost);             
+            userPost.put(userName, listOfPost);             
         }        
         return true;                                            
     }   
@@ -93,7 +105,7 @@ public class PostService {
 
         for (Map.Entry<String,List<Post>> contents : userPost.entrySet()) {
             for (int index = 0; index < contents.getValue().size(); index++) {
-                postFormat.append(contents.getKey())
+                postFormat.append("\n").append(contents.getKey())
                         .append(contents.getValue().get(index));       
             }                                            
         }

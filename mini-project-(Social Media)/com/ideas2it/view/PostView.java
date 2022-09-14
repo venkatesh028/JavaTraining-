@@ -19,12 +19,12 @@ public class PostView {
      * 
      * @param email email of the person who is uploading the post
      */ 
-    public void addPost(String email) {
+    public void addPost(String userName) {
         String quotes;
         scanner.nextLine();
         System.out.print("Enter your quotes : ");
         quotes = scanner.nextLine();
-        if (postController.addPost(email, quotes)) {
+        if (postController.addPost(userName, quotes)) {
             System.out.println("Post added Successfully");
         }        
     }
@@ -32,13 +32,13 @@ public class PostView {
     /** 
      * Add like to the post by getting the details about that post
      */
-    public void addLike() {
+    public void addLike(String likedUserName) {
         scanner.nextLine();
-        System.out.print("Enter the email of the post : ");
-        String emailOfPost = scanner.nextLine();
+        System.out.print("Enter the UserName of the post : ");
+        String userNameOfPost = scanner.nextLine();
         System.out.println("Enter the post number : ");
         int postNumber = scanner.nextInt();
-        postController.addLike(emailOfPost, postNumber);                   
+        postController.addLike(likedUserName, userNameOfPost, postNumber);                   
     }
     
     /**
@@ -46,7 +46,7 @@ public class PostView {
      */
     public void addComment() {
         scanner.nextLine();
-        System.out.print("Enter the email of the post : ");
+        System.out.print("Enter the UserName of the post : ");
         String emailOfPost = scanner.nextLine();
         System.out.print("Enter the post number : ");
         int postNumber = scanner.nextInt();   
@@ -64,7 +64,7 @@ public class PostView {
      *
      * @param email email of the user who is in this page
      */
-    public void displayPost(String email) {    
+    public void displayPost(String userName) {    
         StringBuilder statement = new StringBuilder();
         int action;
         final int ADDPOST = 1;
@@ -88,11 +88,11 @@ public class PostView {
             
             switch (action) {
             case ADDPOST:
-                addPost(email);
+                addPost(userName);
                 break;
 
             case LIKE:
-                addLike();
+                addLike(userName);
                 break;
 
             case COMMENT:

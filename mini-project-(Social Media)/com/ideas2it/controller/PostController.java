@@ -37,8 +37,8 @@ public class PostController {
      * @param  quotes  quotes quotes entered by the user
      * @return boolean true if the post is added successfully or else false
      */
-    public boolean addPost(String email, String quotes) {
-        return postService.addPost(email, quotes);   
+    public boolean addPost(String userName, String quotes) {
+        return postService.addPost(userName, quotes);   
     }
     
     /** 
@@ -48,8 +48,8 @@ public class PostController {
      * @param  postNumber postNumber of that particular post
      * @return boolean    true if the like is added else flase
      */
-    public boolean addLike(String email, int postNumber) {
-        return postService.addLike(email, postNumber);    
+    public boolean addLike(String likedUserName, String userNameOfPost, int postNumber) {
+        return postService.addLike(likedUserName, userNameOfPost, postNumber);    
     }
     
     /**
@@ -60,7 +60,7 @@ public class PostController {
      * @param  postNumber post number of the particular post
      * @return boolean    true if the comment is added else false
      */ 
-    public boolean addComment(String email, String comment ,int postNumber) {
-        return postService.addComment(email, comment, postNumber) ;   
+    public boolean addComment(String userName, String comment ,int postNumber) {
+        return postService.addComment(userName, comment, postNumber) ;   
     }
 }

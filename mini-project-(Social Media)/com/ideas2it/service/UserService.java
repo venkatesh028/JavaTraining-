@@ -4,6 +4,8 @@ import com.ideas2it.model.User;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Perform the create, delete ,change  and validation
@@ -14,20 +16,25 @@ import java.util.HashMap;
  */
 public class UserService {
     private Map<String,User> users = new HashMap<>();
+    private Set<String> userNames = new HashSet<>();
+    private Set<String> emails = new HashSet<>();
+    private Map<String,String> loginCredentials = new HashMap<>();
     private User user;
+    
     
     /**
      * Add a account to the map with email as a key
      * 
-     * @param  key     email of the user 
-     * @param  user    Details of the uer
-     * @return boolean true if the user is added successfully else false
+     * @param  key  email of the user 
+     * @param  user Details of the uer
+     * @return true after adding the user details
      */
-    public boolean createAccount(String key, User user) {
-        if (null == users.putIfAbsent(key,user)) {
-            return true;
-        }
-        return false;
+    public boolean createAccount(String userName, User user) {
+        users.put(userName,user);
+        userNames.add(userName);
+        emails.add(user.getEmail());
+        loginCredentials.put(user.getEmail(),user.getPassword());        
+        return true; 
     }
     
     /**
@@ -36,9 +43,12 @@ public class UserService {
      * @param  email   email of the user 
      * @return boolean true if the account is deleted else false 
      */
-    public boolean deleteAccount(String email) {
-        user = users.get(email);        
-        return users.remove(email,user);     
+    public boolean deleteAccount(String userName) {
+        user = users.get(userName);        
+        return userNames.remove(userName) && 
+               emails.remove(user.getEmail()) &&
+               users.remove(userName,user);
+                    
     }
     
     /** 
@@ -48,13 +58,11 @@ public class UserService {
      * @param  newEmail new email of the user
      * @return boolean  true if the changes is successfully updated
      */
-    public boolean changeEmail(String oldEmail, String newEmail) {
-        user = users.remove(oldEmail);
+    public boolean changeEmail(String userName, String newEmail) {
+        user = users.get(userName);
+        emails.remove(user.getEmail());
         user.setEmail(newEmail);
-        if (null == users.put(newEmail, user)) {
-            return true;
-        }
-        return false;
+        return emails.add(newEmail);      
     }
     
     /**
@@ -64,10 +72,16 @@ public class UserService {
      * @param  newName new name entered by the user
      * @return boolean true after changeing the name successfully
      */
-    public boolean changeName(String email, String newName) {
-        user = users.get(email);
+    public boolean changeName(String userName, String newName) {
+        user = users.get(userName);
         user.setName(newName);
         return true;
+    }
+    
+    public boolean changeUserName(String userName, String newUserName) {
+        user = users.remove(userName);
+        users.put(newUserName, user);
+        return true;        
     }
     
     /**
@@ -78,11 +92,12 @@ public class UserService {
      * @param  newPassword new password entered by the user
      * @return boolean     true if the password changed successfully else false
      */  
-    public boolean changePassword(String email,String oldPassword,
+    public boolean changePassword(String userName,String oldPassword,
                                       String newPassword) {
-        user = users.get(email);
+        user = users.get(userName);
         if (user.getPassword().equals(oldPassword)) {
             user.setPassword(newPassword);
+            loginCredentials.put(user.getEmail(),newPassword);
             return true;
         } 
         return false;
@@ -95,7 +110,7 @@ public class UserService {
      * @return true or false based on the result
      */
     public boolean isAccountExist(String email) {
-        if (users.containsKey(email)) {
+        if (emails.contains(email)) {
             return true;
         }
         return false;   
@@ -109,11 +124,24 @@ public class UserService {
      * @return boolean  true or false based on the result
      */
     public boolean isValidCredentials(String email, String password) {
-        user = users.get(email);
- 
-        if (user.getPassword().equals(password)) {
+        String userPassword = loginCredentials.get(email);
+        if (userPassword.equals(password)) {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Check is the given UserName is already if not it will get added
+     * 
+     * @param  userName UserName given by the user
+     * @return boolean  true if the username added successfully else false
+     */
+    public boolean isUsernameExist(String userName) {
+        return userNames.contains(userName);        
+    }
+    
+    public boolean isEmailExist(String email) {
+        return emails.contains(email);
     }
 }

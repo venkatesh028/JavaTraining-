@@ -8,7 +8,7 @@ package com.ideas2it.service;
  */ 
 public class ValidationService {
     
-   private String emailFormat = "^[a-zA-Z0-9][a-zA-Z0-9.]{5,30}@[a-zA-Z0-9][a-zA-Z0-9.]{3,}$";
+   private String emailFormat = "^[a-zA-Z0-9][a-zA-Z0-9.]{3,30}@[a-zA-Z0-9][a-zA-Z0-9.]{3,}$";
    private String passwordFormat = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])"
                                      + "(?=.*[@#$%^&+=])" 
                                      + "(?=\\S+$).{8,20}$";

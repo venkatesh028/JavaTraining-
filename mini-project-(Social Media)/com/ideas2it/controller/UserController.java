@@ -21,8 +21,8 @@ public class UserController {
      * @param  user     details of the user
      * @return boolean  true if account is created successfully else false
      */
-    public boolean createAccount(String key, User user){
-        return userService.createAccount(key, user);
+    public boolean createAccount(String username, User user){
+        return userService.createAccount(username, user);
     }
    
     /**
@@ -65,7 +65,27 @@ public class UserController {
     public boolean isValidPassword(String password) {
         return validationService.isValidPassword(password);
     }
-    
+     
+    /**
+     * Check is the username is exist or not
+     * 
+     * @param  userName username given by the user
+     * @return boolean  true if the name is not exist else false
+     */
+     public boolean isUsernameExist(String username) {
+         return userService.isUsernameExist(username);
+     }
+
+    /**
+     * Check is the email is already exist or not
+     * 
+     * @param  email    email given by the user
+     * @return boolean  true if the email is not exist else false
+     */
+     public boolean isEmailExist(String email) {
+         return userService.isEmailExist(email);
+     }
+
     /**
      * Delete the user account 
      *

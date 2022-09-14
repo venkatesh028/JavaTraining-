@@ -28,7 +28,7 @@ public class UserView {
     public void login() {
         String email;
         String password;
-        
+
     accountExist:
         while (true) {
             System.out.print("Enter your emailId : ");
@@ -38,7 +38,6 @@ public class UserView {
  
             if (userController.isAccountExist(email)) {               
                 if (userController.isValidCredentials(email, password)) {
-                    System.out.println("entry done");
                     feedView.showNewsFeed(email);
                 } else {
                     System.out.println("Invalid password try again ");
@@ -59,39 +58,56 @@ public class UserView {
         User user;
         String name;
         String email;
-        String password;        
+        String password; 
+        String userName;       
         System.out.print("Enter your name : ");
-        name = scanner.next();
-        
-    validEmail:
+        name = scanner.next();      
+    
         while (true) {
             System.out.print("Enter your emailId : ");
             email = scanner.next();
 
             if (userController.isValidEmail(email)) {
-                email = email;
-                break validEmail;
-            } 
-            System.out.println("Invalid email ");       
+                if (!userController.isEmailExist(email)) {
+                    break;
+                } else {
+                    System.out.println("Email Already exist");
+                }                
+            } else {
+                System.out.println("Invalid email format");     
+            }  
         }
 
-    validPassword:
+    
         while (true) {
             System.out.print("Enter your password : ");
             password = scanner.next();
             
             if (userController.isValidPassword(password)) {
-                password = password;
-                break validPassword;
+                break;
             }
             System.out.println("Invalid your password must"
-                              + " contain mentioned charater");                
+                              + (" contain (a-ZA-Z0-9@#$%^&+=) ")
+                              + ( "range must be 8-20");                
         }    
         user = new User(name,email,password);
+
+        System.out.println("Set user name to keep your account unique");
+
+        while (true) {
+            System.out.print("UserName : ");
+            userName = scanner.next();
+            
+            if (!userController.isUsernameExist(userName)) {
+                break;    
+            } else {
+                System.out.println("UserName is already exist Enter a new one");                
+            } 
+        }          
   
-        if (userController.createAccount(email,user)) {           
+        if (userController.createAccount(userName,user)) {           
             System.out.println("Account Created Succesfully");
-            feedView.showNewsFeed(email);
+            feedView.showNewsFeed(userName);
         } else {
             System.out.println("This email Id is alredy exist");
         }                          

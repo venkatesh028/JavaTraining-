@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public class FeedView {
     private PostView postView = new PostView();
-  //  private ProfileView profileView = new ProfileView();
+   // private ProfileView profileView = new ProfileView();
     private Scanner scanner = new Scanner(System.in);
     
-    public void showNewsFeed(String email) {
+    public void showNewsFeed(String userName) {
         int action;
         final int SHOW_POST = 1;
         final int SHOW_PROFILE = 2;
@@ -27,11 +27,11 @@ public class FeedView {
 
             switch(action) {
             case SHOW_POST:
-                postView.displayPost(email);
+                postView.displayPost(userName);
                 break;
             
             case SHOW_PROFILE:
-                //profileView.displyProfile(email);
+               // profileView.displayProfilePage(userName);
                 break;
    
             case LOGUT:
