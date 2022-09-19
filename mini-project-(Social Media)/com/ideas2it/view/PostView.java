@@ -1,8 +1,9 @@
 package com.ideas2it.view;
 
-import com.ideas2it.controller.PostController;
-
 import java.util.Scanner;
+
+import com.ideas2it.controller.PostController;
+import com.ideas2it.controller.ProfileController; 
 
 /**
  * Shows the news feed page to user and based on is action shows further pages
@@ -13,26 +14,29 @@ import java.util.Scanner;
 public class PostView {
     private PostController postController;
     private Scanner scanner;
-   
+    private ProfileController profileController;
+
     /**
      * Creates a new object for the PostView and initialize the feilds
      * of that class
      */ 
     public PostView() {
         this.postController = new PostController();
+        this.profileController = new ProfileController();
         this.scanner = new Scanner(System.in);
     }
     
     /** 
      * Add the post by getting the quotes form the user
      * 
-     * @param email email of the person who is uploading the post
+     * @param userName userName of the person who is uploading the post
      */ 
     public void addPost(String userName) {
         String quotes;
         scanner.nextLine();
         System.out.print("Enter your quotes : ");
         quotes = scanner.nextLine();
+
         if (postController.addPost(userName, quotes)) {
             System.out.println("Post added Successfully");
         }        
@@ -40,13 +44,15 @@ public class PostView {
     
     /** 
      * Add like to the post by getting the details about that post
+     * 
+     * @param likedUserName userName of the person who liked the post
      */
     public void addLike(String likedUserName) {
         scanner.nextLine();
         System.out.print("Enter the UserName of the post : ");
         String userNameOfPost = scanner.nextLine();
         System.out.println("Enter the post number : ");
-        int postNumber = scanner.nextInt();
+        int postNumber = scanner.nextInt();        
         postController.addLike(likedUserName, userNameOfPost, postNumber);                   
     }
     
@@ -56,13 +62,14 @@ public class PostView {
     public void addComment() {
         scanner.nextLine();
         System.out.print("Enter the UserName of the post : ");
-        String emailOfPost = scanner.nextLine();
+        String userName = scanner.nextLine();
         System.out.print("Enter the post number : ");
         int postNumber = scanner.nextInt();   
         scanner.nextLine();
         System.out.print("Enter your comment : ");
         String comment = scanner.nextLine();
-        if (postController.addComment(emailOfPost, comment, postNumber)) {
+
+        if (postController.addComment(userName, comment, postNumber)) {
             System.out.println("Comment added successfully ");
         }       
     }
@@ -73,27 +80,31 @@ public class PostView {
      *
      * @param email email of the user who is in this page
      */
-    public void displayPost(String userName) {    
+    public void displayPost(int userId) {      
+        String userName = profileController.getUserName(userId);
         StringBuilder statement = new StringBuilder();
         int action;
         final int ADDPOST = 1;
         final int LIKE = 2;
         final int COMMENT = 3;
         final int EXIT = 4;
-
-        statement.append("Enter ").append(ADDPOST).append(" to add post ")
-                 .append(LIKE).append(" to add like ").append(COMMENT)
-                 .append(" to add comment ").append(EXIT)
-                 .append(" to exit post feed : ");
-    newsFeed:
-        while (true) {        
+        boolean postFeedRunning = true;
+        statement.append("\nEnter ").append(ADDPOST)
+                 .append(" --> To add post ").append("\nEnter ")
+                 .append(LIKE).append(" --> To add like ")
+                 .append("\nEnter ").append(COMMENT)
+                 .append(" --> To add comment ")
+                 .append("\nEnter ").append(EXIT)
+                 .append(" --> To exit post feed : ");
+    
+        while (postFeedRunning) {        
             if (postController.isPostEmpty()) {
                 System.out.println(postController.showPost());    
             } else {
                 System.out.println("Post is not available");
             } 
             
-            System.out.print(statement);
+            System.out.println(statement);
             action = scanner.nextInt();
             
             switch (action) {
@@ -110,7 +121,8 @@ public class PostView {
                 break;
 
             case EXIT:
-                break newsFeed;
+                postFeedRunning = false;
+                break;
 
             default:
                 System.out.println("You entered wrong option");

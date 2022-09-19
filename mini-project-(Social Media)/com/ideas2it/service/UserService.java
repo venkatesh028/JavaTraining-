@@ -1,186 +1,134 @@
 package com.ideas2it.service;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import com.ideas2it.model.User;
+import com.ideas2it.dao.UserDao;
 import com.ideas2it.util.ValidationUtil;
+import com.ideas2it.constant.Pattern;
 
 /**
- * Perform the create, delete ,change  and validation
+ * Perform the create, delete ,change and validation
  * Based on the user request 
  *
  * @author Venkatesh TM
  * @version 1.0 08-SEP-2022
  */
 public class UserService {
-    private Map<String,User> users;
-    private Set<String> userNames;
-    private Set<String> emails;
-    private Map<String,String> loginCredentials;
-    private User user;
+    private static Map<Integer, User> users;
+    private static Set<String> userNames;
+    private static Map<String, Integer> loginCredentials;
+    private static int id;
     private ValidationUtil validationUtil;
+    private User user;
+    private UserDao userDao;
 
-    private String emailFormat;
-    private String passwordFormat;
+    static {
+        id = 0;
+    }
 
-    /**
-     * Creates a new object for the UserService and initialize the feilds
-     * of that class
-     */
     public UserService() {
-        this.users = new HashMap<>();
-        this.userNames = new HashSet<>();
-        this.emails = new HashSet<>();
-        this.loginCredentials = new HashMap<>();
+        this.userDao = new UserDao();
         this.validationUtil = new ValidationUtil();
-        this.emailFormat = "^[a-zA-Z0-9][a-zA-Z0-9.]{3,30}@"
-                           + "[a-zA-Z0-9][a-zA-Z0-9.]{3,}$";
-        this.passwordFormat = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])"
-                                     + "(?=.*[@#$%^&+=])" 
-                                     + "(?=\\S+$).{8,20}$";
     }
 
     /**
-     * Add a account to the map with email as a key
-     * 
-     * @param  userName username of the user 
-     * @param  user     Details of the uer
-     * @return true     after adding the user details
+     * Create account for the user and add with id as key in users
+     *  
+     * @param  userName userName of the user
+     * @param  user     details of the user
+     * @return boolean  true after adding the user in map
      */
     public boolean createAccount(String userName, User user) {
-        users.put(userName,user);
-        userNames.add(userName);
-        emails.add(user.getEmail());
-        loginCredentials.put(user.getEmail(),user.getPassword());        
-        return true; 
-    }
-    
-    /**
-     * Delete the Account of the user based on the email
-     *
-     * @param  userName UserName of the user 
-     * @return boolean  true if the account is deleted else false 
-     */
-    public boolean deleteAccount(String userName) {
-        user = users.get(userName);        
-        return userNames.remove(userName) && 
-               emails.remove(user.getEmail()) &&
-               users.remove(userName,user);
-                    
-    }
-    
-    /** 
-     * Change the email of the user
-     * 
-     * @param  userName userName of the user 
-     * @param  newEmail new email of the user
-     * @return boolean  true if the changes is successfully updated
-     */
-    public boolean changeEmail(String userName, String newEmail) {
-        user = users.get(userName);
-        emails.remove(user.getEmail());
-        user.setEmail(newEmail);
-        return emails.add(newEmail);      
-    }
-    
-    /**
-     * Change the name of the user 
-     *
-     * @param  userName   UserName of the user
-     * @param  newName new name entered by the user
-     * @return boolean true after changeing the name successfully
-     */
-    public boolean changeName(String userName, String newName) {
-        user = users.get(userName);
-        user.setName(newName);
+        userDao.createAccount(id, userName, user);
+        id++;          
         return true;
     }
-
+    
     /**
-     * Change the userName of the user
+     * check the email is already exist or not 
      * 
-     * @param 
-    public boolean changeUserName(String userName, String newUserName) {
-        user = users.remove(userName);
-        users.put(newUserName, user);
-        return true;        
-    }
-    
-    /**
-     * Change the password of the user
-     *
-     * @param  email       email of the user
-     * @param  oldPassword old password of the user
-     * @param  newPassword new password entered by the user
-     * @return boolean     true if the password changed successfully else false
-     */  
-    public boolean changePassword(String userName,String oldPassword,
-                                      String newPassword) {
-        user = users.get(userName);
-        if (user.getPassword().equals(oldPassword)) {
-            user.setPassword(newPassword);
-            loginCredentials.put(user.getEmail(),newPassword);
-            return true;
-        } 
-        return false;
-    }
-    
-    /** 
-     * check is the account is exist with the email
-     *
-     * @param  email email entered by the user
-     * @return true or false based on the result
+     * @param  email   email entered by the user
+     * @return boolean true or false based on the result
      */
     public boolean isAccountExist(String email) {
-        if (emails.contains(email)) {
-            return true;
-        }
-        return false;   
-    }  
+        loginCredentials = userDao.getLoginCredentials();
+        return loginCredentials.containsKey(email);
+    }
     
     /**
-     * Check is the given credentials are valid 
+     * Check the given credentials are valid
      *
-     * @param  email    email entered by the user
+     * @param  email    email of the user
      * @param  password password entered by the user
      * @return boolean  true or false based on the result
      */
     public boolean isValidCredentials(String email, String password) {
-        String userPassword = loginCredentials.get(email);
-        if (userPassword.equals(password)) {
-            return true;
+        loginCredentials = userDao.getLoginCredentials();
+        users = userDao.getUsers();
+        user = users.get(loginCredentials.get(email));
+
+        if (user.getEmail().equals(email) &&
+            user.getPassword().equals(password)) {
+                return true;
         }
         return false;
     }
+   
+    /**
+     * Is given email is valid or not
+     *
+     * @param email    email enterd by the user
+     * @return boolean true or false based on the result
+     */  
+    public boolean isValidEmail(String email) {
+        return validationUtil.isValid(email, Pattern.emailFormat);
+    }
     
     /**
-     * Check is the given UserName is already exist
-     * 
-     * @param  userName UserName given by the user
-     * @return boolean  true if the username added successfully else false
+     * Is given password is valid or not
+     *
+     * @param  password password entered by the user
+     * @return boolean  true or false based on the result 
      */
-    public boolean isUsernameExist(String userName) {
-        return userNames.contains(userName);        
+    public boolean isValidPassword(String password) {
+        return validationUtil.isValid(password, Pattern.passwordFormat);
     }
-
+    
     /**
-     * Check is the given email is already exist
+     * Check the given userName is already exist or not 
+     *
+     * @param  userName username entered by the user
+     * @return boolean based on the result
+     */ 
+    public boolean isUsernameExist(String userName) { 
+        userNames = userDao.getUserNames();
+        return userNames.contains(userName);
+    }
+    
+    /**
+     * Check the given email is already exist or not
      * 
-     * @param  email   email given by the user
-     * @return boolean true if the username added successfully else false
+     * @param  email   email entered by the user
+     * @return boolean true or false based on the result
      */
     public boolean isEmailExist(String email) {
-        return emails.contains(email);
+        loginCredentials = userDao.getLoginCredentials();
+        return loginCredentials.containsKey(email);
     }
     
-    public boolean isValidEmail(String email) {
-        return validationUtil.isValid(email,emailFormat);
+    /**
+     * Get userId for the given email 
+     * 
+     * @param  email   email entered by the user
+     * @return boolean true or false based on the result
+     */
+    public int getUserId(String email) {
+        loginCredentials = userDao.getLoginCredentials();
+        return loginCredentials.get(email);
     }
     
-    public boolean isValidPassword(String password) {
-        return validationUtil.isValid(password,passwordFormat);
-    }
 }

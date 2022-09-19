@@ -1,4 +1,4 @@
-package com.ideas2it.controller;
+  package com.ideas2it.controller;
 
 import com.ideas2it.service.UserService;
 import com.ideas2it.model.User;
@@ -27,8 +27,8 @@ public class UserController {
      * @param  user     details of the user
      * @return boolean  true if account is created successfully else false
      */
-    public boolean createAccount(String username, User user){
-        return userService.createAccount(username, user);
+    public boolean createAccount(String userName, User user){
+        return userService.createAccount(userName, user);
     }
    
     /**
@@ -98,8 +98,12 @@ public class UserController {
      * @param  email   email of the user to find the account
      * @return booelan true if the account is deleted Successfully else false
      */      
-    public boolean deleteAccount(String email) {
+   /* public boolean deleteAccount(String email) {
         return userService.deleteAccount(email);
+    }*/
+   
+    public int getUserId(String email) {
+        return userService.getUserId(email);
     }
     
 }

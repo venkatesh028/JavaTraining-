@@ -1,70 +1,92 @@
 package com.ideas2it.service;
 
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
-
 import com.ideas2it.model.Post;
+import com.ideas2it.dao.PostDao;
 
 /** 
  * Perform the add functionality for post ,like and comment 
  * and also the create a post format to view
  *
- * @version 1.0 12-SEP-2022
+ * @version 1.0 14-SEP-2022
  * @author Venkatesh TM
  */
 public class PostService {
     private Map<String, List<Post>> userPost;
     private List<Post> listOfPost;
-    private Post post;
-
-    /**
-     * Creates a new object for the PostService and initialize the feilds
-     * of that class
-     */    
+    private PostDao postDao;
+    
     public PostService() {
-        this.userPost = new HashMap<>();
-        this.listOfPost = new ArrayList<>();
-    }
-
-    /**
-     * Add comment on the particular post of the particular user with the postNumber
-     *
-     * @param  email      email of the user belongs to that post 
-     * @parma  comment    comment need to be added
-     * @param  postNumber post number of the particular post
-     * @return boolean    true if the comment is added else false 
-     */
-    public boolean addComment(String userName, String comment, int postNumber) {
-        List<Post> postOfUser = userPost.get(userName);
-        for (int index = 0; index < postOfUser.size(); index++) {
-            Post post = postOfUser.get(index);
-            if (post.getPostNumber() == postNumber) {
-                post.setComment(comment);
-                return true;
-            } 
-        }    
-        return false;            
+        this.postDao = new PostDao();
     }
     
-    /** 
-     * Add like to the particular post for the particular user
+    /**
+     * Check is the userPost is empty 
+     * 
+     * @return true or false based on the result
+     */
+    public boolean isPostEmpty() {
+        userPost = postDao.getUserPost();
+
+        if (userPost.isEmpty()) {
+            return false;
+        }
+        return true;  
+    }
+    
+    public boolean isMyPostEmpty(String userName) { 
+        listOfPost = postDao.getPost(userName);  
+        System.out.println(listOfPost);     
+        return userPost.isEmpty();
+    }
+   
+    /**
+     * Add post to particular user with userName as a key
+     * 
+     * @param userName userName of the user
+     * @param quotes   post of the user
+     */
+    public boolean addPost(String userName, String quotes) {
+
+        if (userPost.containsKey(userName)) { 
+            int postNumber = userPost.get(userName).size();           
+            Post temporaryPost = new Post(postNumber+1, quotes);
+            listOfPost.add(temporaryPost);
+            postDao.addPost(userName, listOfPost);   
+        } else {
+            listOfPost = new ArrayList<>();
+            int postNumber = 1;
+            Post temporaryPost = new Post(postNumber, quotes);
+            listOfPost.add(temporaryPost);
+            postDao.addPost(userName, listOfPost);             
+        }        
+        return true; 
+    }
+    
+    /**
+     * Add like to the particular post
      *
-     * @param  email      email of the user belongs to that post
-     * @param  postNumber postNumber of that particular post
-     * @return boolean    true if the like is added else flase
-     */ 
+     * @param likedUserName  name userename of the user who liked
+     * @param userNameOfPost username of the post 
+     * @parma postNumber     post number of the post
+     */
     public boolean addLike(String likedUserName, String userNameOfPost, 
                                                  int postNumber) {
-        List<Post> postOfUser = userPost.get(userNameOfPost);
+
+        List<Post> postOfUser = postDao.getPost(userNameOfPost);
         Set<String> likedUsers;
+
         for (int index = 0; index < postOfUser.size(); index++) {
             Post post = postOfUser.get(index);
+
             if (post.getPostNumber() == postNumber) {
                 likedUsers = post.getLikedUsers();
+
                 if (! likedUsers.contains(likedUserName)) {
                     post.setLike();
                     post.setLikedUsers(likedUserName);
@@ -73,44 +95,44 @@ public class PostService {
                 }                
                 return true;
             } 
-        }    
+        } 
+        postDao.updatePost(userNameOfPost, postOfUser);   
         return false;        
-    } 
+    }
 
     /**
-     * Add comment on the particular post for the particular user
+     * Add comment to the post 
      * 
-     * @param  email      email of the user belongs to that post 
-     * @parma  comment    comment need to be added
-     * @param  postNumber post number of the particular post
-     * @return boolean    true if the comment is added else false
+     * @param  userName   username of the post 
+     * @param  comment    comment need to added
+     * @param  postNumber postNumber to find out which post
+     * @return boolean    true after adding the post
      */
-    public boolean addPost(String userName, String quotes) {
+    public boolean addComment(String userName, String comment, int postNumber) {
+        List<Post> postOfUser = postDao.getPost(userName);
 
-        if (userPost.containsKey(userName)) { 
-            int postNumber = userPost.get(userName).size();           
-            Post temporaryPost = new Post(postNumber+1, quotes);
-            listOfPost.add(temporaryPost);
-            userPost.put(userName, listOfPost);   
-        } else {
-            listOfPost = new ArrayList<>();
-            int postNumber = 1;
-            Post temporaryPost = new Post(postNumber, quotes);
-            listOfPost.add(temporaryPost);
-            userPost.put(userName, listOfPost);             
-        }        
-        return true;                                            
-    }   
+        for (int index = 0; index < postOfUser.size(); index++) {
+            Post post = postOfUser.get(index);
 
+            if (post.getPostNumber() == postNumber) {
+                post.setComment(comment);
+                return true;
+            } 
+        } 
+        postDao.updatePost(userName, postOfUser);
+        return false;            
+    }
+       
     /**
-     * Shows the post to the user in the certain foramt 
-     *
-     * @return postForamt shows the post to user in certain format
+     * Display the post to the user
+     * 
+     * @return postFormat post in the particular format to display 
      */
     public String showPost() {
         StringBuilder postFormat = new StringBuilder();
+        userPost = postDao.getUserPost(); 
 
-        for (Map.Entry<String,List<Post>> contents : userPost.entrySet()) {
+        for (Map.Entry<String, List<Post>> contents : userPost.entrySet()) {
             for (int index = 0; index < contents.getValue().size(); index++) {
                 postFormat.append("\n").append(contents.getKey())
                         .append(contents.getValue().get(index));       
@@ -118,17 +140,16 @@ public class PostService {
         }
         
         return postFormat.toString();  
-    }
+    } 
+    
+    public String showMyPost(String userName) {
+        StringBuilder myPost = new StringBuilder();
+        listOfPost = postDao.getPost(userName); 
 
-    /** 
-     * Check is the list of post is empty or not 
-     *
-     * @return boolean true if it is not empty else fasle
-     */
-    public boolean isPostEmpty () {
-        if (userPost.isEmpty()) {
-            return false;
+        for (int index = 0; index < listOfPost.size(); index++) {
+            myPost.append("\n").append(listOfPost.get(index));    
         }
-        return true;          
+        return myPost.toString();        
     }
+    
 }

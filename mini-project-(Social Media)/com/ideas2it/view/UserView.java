@@ -1,34 +1,32 @@
 package com.ideas2it.view;
 
-import com.ideas2it.controller.UserController;
-import com.ideas2it.model.User;
-import com.ideas2it.view.FeedView;
-
 import java.util.Scanner;
 
+import com.ideas2it.controller.UserController;
+import com.ideas2it.controller.ProfileController;
+import com.ideas2it.model.User;
+
 /**
- * shows the home page to the user based on the user option
+ * Shows the home page to the user based on the user option
  * it takes to the further pages
  *
- * @author Venkatesh TM
- * @version 1.0
- *
+ * @version 1.0 09-SEP-2022
+ * @author Venkatesh TM 
  */
 public class UserView {
-
-    private UserController userController;
-    private FeedView feedView;
     private Scanner scanner;
+    private UserController userController;
+    private int userId;
+    private FeedView feedView;
+    private ProfileController profileController;
     
-    /**
-     * Creates a new object for the UserView and initialize the feilds
-     * of that class
-     */    
     public UserView() {
-        userController = new UserController();
-        feedView = new FeedView();
-        scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
+        this.userController = new UserController();
+        this.profileController = new ProfileController();
+        this.feedView = new FeedView();
     }
+
 
     /** 
      * Gets the emailId and password from the user
@@ -38,9 +36,9 @@ public class UserView {
     public void login() {
         String email;
         String password;
-
-    accountExist:
-        while (true) {
+        boolean accountExist = true;
+    
+        while (accountExist) {
             System.out.print("Enter your emailId : ");
             email = scanner.next(); 
             System.out.print("Enter your password : ");
@@ -48,16 +46,16 @@ public class UserView {
  
             if (userController.isAccountExist(email)) {               
                 if (userController.isValidCredentials(email, password)) {
-                    feedView.showNewsFeed(email);
+                    feedView.showNewsFeed(userController.getUserId(email));
                 } else {
                     System.out.println("Invalid password try again ");
                 }                   
             } else {
                 System.out.println("There is no account with this mailID ");
-                break accountExist;
+                accountExist = false;
             }
         } 
-    } 
+    }    
     
     /**
      * Get the datails from the user
@@ -66,21 +64,23 @@ public class UserView {
      */
     public void createAccount() {
         User user = new User();
-        String name;
         String email;
         String password; 
-        String userName;       
+        String userName = "";  
+        boolean emailValid = false;
+        boolean passwordValid = true;
+        boolean userNameValid = true;     
         System.out.print("Enter your name : ");
         user.setName(scanner.next());      
     
-        while (true) {
+        while (!emailValid) {
             System.out.print("Enter your emailId : ");
             email = scanner.next();
 
             if (userController.isValidEmail(email)) {
                 if (!userController.isEmailExist(email)) {
                     user.setEmail(email);
-                    break;
+                    emailValid = true;
                 } else {
                     System.out.println("Email Already exist");
                 }                
@@ -104,39 +104,42 @@ public class UserView {
         }    
         System.out.println("Set user name to keep your account unique");
 
-        while (true) {
+        while (userNameValid) {
             System.out.print("UserName : ");
             userName = scanner.next();
             
             if (!userController.isUsernameExist(userName)) {
-                break;    
+                userNameValid = false;    
             } else {
                 System.out.println("UserName is already exist Enter a new one");                
             } 
         }          
   
-        if (userController.createAccount(userName,user)) {           
+        if (userController.createAccount(userName, user)) { 
+            userId = userController.getUserId(user.getEmail());   
+            profileController.setProfile(userId,userName,user.getName());      
             System.out.println("Account Created Succesfully");
-            feedView.showNewsFeed(userName);
+            feedView.showNewsFeed(userId);
         } else {
             System.out.println("This email Id is alredy exist");
         }                          
     } 
-  
+    
     //Shows the home page to the user
     public void showHomePage(){
         int selectedOption;
-        final int CREATE_ACCOUNT =1;
+        final int CREATE_ACCOUNT = 1;
         final int LOGIN = 2;
         final int EXIT = 3;
-
+        boolean appRunning = true;
         StringBuilder statement = new StringBuilder();
-        statement.append("Enter ").append(CREATE_ACCOUNT).append(" create a new one ")
-                 .append("with ").append(LOGIN).append(" to login ")
-                 .append("with ").append(EXIT).append(" to quit : ");
-    appRunning:
-        while (true) {
-            System.out.print(statement);
+        statement.append("\nEnter ").append(CREATE_ACCOUNT)
+                 .append(" --> To Create a new account ").append("\nEnter ")
+                 .append(LOGIN).append(" --> To login ")
+                 .append("\nEnter ").append(EXIT).append(" --> To quit ");
+    
+        while (appRunning) {
+            System.out.println(statement);
             selectedOption = scanner.nextInt();
            
             switch (selectedOption) {
@@ -149,7 +152,8 @@ public class UserView {
                 break;
 
             case EXIT:
-                break appRunning;
+                appRunning = false;
+                break;
 
             default:
                 System.out.println("you entered wrong choice "); 
@@ -159,3 +163,6 @@ public class UserView {
         
     }
 }
+    
+    
+
