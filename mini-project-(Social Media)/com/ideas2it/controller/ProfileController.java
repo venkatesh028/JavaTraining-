@@ -25,7 +25,7 @@ public class ProfileController {
      * @parma  name     name of the user
      * @return boolean  true after setup the profile
      */
-    public boolean setProfile(int userId, String userName, String name) {
+    public boolean setProfile(String userId, String userName, String name) {
         return profileService.setProfile(userId, userName, name);
         
     }
@@ -36,7 +36,7 @@ public class ProfileController {
      * @param  userId  userId of the user
      * @return Profile profile of the user
      */
-    public Profile showProfile(int userId) {
+    public Profile showProfile(String userId) {
         return profileService.showProfile(userId);
     }
     
@@ -46,7 +46,7 @@ public class ProfileController {
      * @param  userId   userId of the user
      * @return userName userName of the user
      */
-    public String getUserName(int userId) {
+    public String getUserName(String userId) {
         return profileService.getUserName(userId);
     }
     
@@ -57,7 +57,7 @@ public class ProfileController {
      * @param  bio     bio of the user
      * @return boolean true based on successfully updated
      */
-    public boolean updateBio(int userId, String bio) {
+    public boolean updateBio(String userId, String bio) {
         return profileService.updateBio(userId, bio);
     }
     
@@ -68,7 +68,7 @@ public class ProfileController {
      * @param  newUserName updated username of the user
      * @return boolean     true based on successfully updated
      */ 
-    public boolean updateUserName(int userId, String newUserName) {
+    public boolean updateUserName(String userId, String newUserName) {
         return profileService.updateUserName(userId, newUserName);
     }
     
@@ -79,7 +79,7 @@ public class ProfileController {
      * @param  newName update name of the user
      * @return boolean true based on successfully updated
      */ 
-    public boolean updateName(int userId, String newName) {
+    public boolean updateName(String userId, String newName) {
         return profileService.updateName(userId, newName);
     }
     

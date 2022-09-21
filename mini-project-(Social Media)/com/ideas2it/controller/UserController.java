@@ -1,4 +1,4 @@
-  package com.ideas2it.controller;
+package com.ideas2it.controller;
 
 import com.ideas2it.service.UserService;
 import com.ideas2it.model.User;
@@ -102,7 +102,7 @@ public class UserController {
         return userService.deleteAccount(email);
     }*/
    
-    public int getUserId(String email) {
+    public String getUserId(String email) {
         return userService.getUserId(email);
     }
     

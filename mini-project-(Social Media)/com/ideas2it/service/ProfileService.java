@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ideas2it.model.Profile;
 import com.ideas2it.dao.ProfileDao;
+import com.ideas2it.dao.daoImpl.ProfileDaoImpl;
 
 /** 
  * Perform the Create, update, delete taks for the user profile
@@ -13,7 +14,7 @@ import com.ideas2it.dao.ProfileDao;
  * @author  Venkatesh TM
  */
 public class ProfileService {
-    private static Map<Integer,Profile> userProfiles;
+    private static Map<String,Profile> userProfiles;
     private Profile profile;
     private ProfileDao profileDao;
 
@@ -22,7 +23,7 @@ public class ProfileService {
     }
     
     public ProfileService() {
-        this.profileDao = new ProfileDao();
+        this.profileDao = new ProfileDaoImpl();
     }
     
     /** 
@@ -33,7 +34,7 @@ public class ProfileService {
      * @param  name     name of the user
      * @return boolean  true after setuping the profile 
      */
-    public boolean setProfile(int userId, String userName, String name) {
+    public boolean setProfile(String userId, String userName, String name) {
         return profileDao.setProfile(userId, userName, name);
     }
     
@@ -43,7 +44,7 @@ public class ProfileService {
      * @param  userID  userid of the user
      * @return profile profile of the user
      */
-    public Profile showProfile(int userId) {
+    public Profile showProfile(String userId) {
         return profileDao.showProfile(userId);
     }
    
@@ -53,7 +54,7 @@ public class ProfileService {
      * @param  userId   userid of the user
      * @return userName userName of the user
      */
-    public String getUserName(int userId) {
+    public String getUserName(String userId) {
         userProfiles = profileDao.getUserProfiles();
         profile = userProfiles.get(userId);
         return profile.getUserName();
@@ -66,7 +67,7 @@ public class ProfileService {
      * @param  newName new name given by the user
      * @return boolean true after updateing the name
      */
-    public boolean updateName(int userId, String newName) {
+    public boolean updateName(String userId, String newName) {
         return profileDao.updateName(userId, newName);
     }    
 
@@ -77,7 +78,7 @@ public class ProfileService {
      * @param  newUserName new username given by the user
      * @return boolean true after updateing the username
      */    
-    public boolean updateUserName(int userId, String newUserName) {
+    public boolean updateUserName(String userId, String newUserName) {
         return profileDao.updateUserName(userId, newUserName);
     }
 
@@ -88,7 +89,7 @@ public class ProfileService {
      * @param  bio     bio given by the user
      * @return boolean true after updateing the name
      */
-    public boolean updateBio(int userId, String bio) {
+    public boolean updateBio(String userId, String bio) {
         return profileDao.updateBio(userId, bio);
     }
       

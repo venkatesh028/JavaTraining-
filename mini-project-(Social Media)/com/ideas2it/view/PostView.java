@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.ideas2it.controller.PostController;
 import com.ideas2it.controller.ProfileController; 
+import com.ideas2it.constant.Constants;
 
 /**
  * Shows the news feed page to user and based on is action shows further pages
@@ -31,13 +32,13 @@ public class PostView {
      * 
      * @param userName userName of the person who is uploading the post
      */ 
-    public void addPost(String userName) {
+    public void addPost(String userId) {
         String quotes;
         scanner.nextLine();
         System.out.print("Enter your quotes : ");
         quotes = scanner.nextLine();
 
-        if (postController.addPost(userName, quotes)) {
+        if (postController.addPost(userId, quotes)) {
             System.out.println("Post added Successfully");
         }        
     }
@@ -80,47 +81,44 @@ public class PostView {
      *
      * @param email email of the user who is in this page
      */
-    public void displayPost(int userId) {      
+    public void displayPost(String userId) {      
         String userName = profileController.getUserName(userId);
         StringBuilder statement = new StringBuilder();
         int action;
-        final int ADDPOST = 1;
-        final int LIKE = 2;
-        final int COMMENT = 3;
-        final int EXIT = 4;
         boolean postFeedRunning = true;
-        statement.append("\nEnter ").append(ADDPOST)
+        statement.append("\nEnter ").append(Constants.ADDPOST)
                  .append(" --> To add post ").append("\nEnter ")
-                 .append(LIKE).append(" --> To add like ")
-                 .append("\nEnter ").append(COMMENT)
+                 .append(Constants.LIKE).append(" --> To add like ")
+                 .append("\nEnter ").append(Constants.COMMENT)
                  .append(" --> To add comment ")
-                 .append("\nEnter ").append(EXIT)
+                 .append("\nEnter ").append(Constants.EXIT_POSTPAGE)
                  .append(" --> To exit post feed : ");
     
         while (postFeedRunning) {        
             if (postController.isPostEmpty()) {
-                System.out.println(postController.showPost());    
+                System.out.println("Post is not available");    
             } else {
-                System.out.println("Post is not available");
+                System.out.println(postController.showPost());
+                    
             } 
             
             System.out.println(statement);
             action = scanner.nextInt();
             
             switch (action) {
-            case ADDPOST:
-                addPost(userName);
+            case Constants.ADDPOST:
+                addPost(userId);
                 break;
 
-            case LIKE:
+            case Constants.LIKE:
                 addLike(userName);
                 break;
 
-            case COMMENT:
+            case Constants.COMMENT:
                 addComment();
                 break;
 
-            case EXIT:
+            case Constants.EXIT_POSTPAGE:
                 postFeedRunning = false;
                 break;
 

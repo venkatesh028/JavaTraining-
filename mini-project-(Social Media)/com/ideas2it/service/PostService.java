@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.ideas2it.model.Post;
 import com.ideas2it.dao.PostDao;
+import com.ideas2it.dao.daoImpl.PostDaoImpl;
 
 /** 
  * Perform the add functionality for post ,like and comment 
@@ -22,7 +23,7 @@ public class PostService {
     private PostDao postDao;
     
     public PostService() {
-        this.postDao = new PostDao();
+        this.postDao = new PostDaoImpl();
     }
     
     /**
@@ -34,9 +35,9 @@ public class PostService {
         userPost = postDao.getUserPost();
 
         if (userPost.isEmpty()) {
-            return false;
+            return true;
         }
-        return true;  
+        return false;  
     }
     
     public boolean isMyPostEmpty(String userName) { 
@@ -51,19 +52,19 @@ public class PostService {
      * @param userName userName of the user
      * @param quotes   post of the user
      */
-    public boolean addPost(String userName, String quotes) {
+    public boolean addPost(String userId, String quotes) {
 
-        if (userPost.containsKey(userName)) { 
-            int postNumber = userPost.get(userName).size();           
+        if (userPost.containsKey(userId)) { 
+            int postNumber = userPost.get(userId).size();           
             Post temporaryPost = new Post(postNumber+1, quotes);
             listOfPost.add(temporaryPost);
-            postDao.addPost(userName, listOfPost);   
+            postDao.addPost(userId, listOfPost);   
         } else {
             listOfPost = new ArrayList<>();
             int postNumber = 1;
             Post temporaryPost = new Post(postNumber, quotes);
             listOfPost.add(temporaryPost);
-            postDao.addPost(userName, listOfPost);             
+            postDao.addPost(userId, listOfPost);             
         }        
         return true; 
     }
@@ -134,12 +135,11 @@ public class PostService {
 
         for (Map.Entry<String, List<Post>> contents : userPost.entrySet()) {
             for (int index = 0; index < contents.getValue().size(); index++) {
-                postFormat.append("\n").append(contents.getKey())
-                        .append(contents.getValue().get(index));       
+                postFormat.append("\n").append(contents.getValue().get(index));                    
             }                                            
-        }
+        } 
         
-        return postFormat.toString();  
+        return postFormat.toString();       
     } 
     
     public String showMyPost(String userName) {

@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 import com.ideas2it.controller.UserController;
 import com.ideas2it.controller.ProfileController;
+import com.ideas2it.constant.Constants;
 import com.ideas2it.model.User;
+
 
 /**
  * Shows the home page to the user based on the user option
@@ -16,7 +18,7 @@ import com.ideas2it.model.User;
 public class UserView {
     private Scanner scanner;
     private UserController userController;
-    private int userId;
+    private String userId;
     private FeedView feedView;
     private ProfileController profileController;
     
@@ -47,6 +49,7 @@ public class UserView {
             if (userController.isAccountExist(email)) {               
                 if (userController.isValidCredentials(email, password)) {
                     feedView.showNewsFeed(userController.getUserId(email));
+                    accountExist = false;
                 } else {
                     System.out.println("Invalid password try again ");
                 }                   
@@ -68,8 +71,8 @@ public class UserView {
         String password; 
         String userName = "";  
         boolean emailValid = false;
-        boolean passwordValid = true;
-        boolean userNameValid = true;     
+        boolean passwordValid = false;
+        boolean userNameValid = false;     
         System.out.print("Enter your name : ");
         user.setName(scanner.next());      
     
@@ -90,26 +93,28 @@ public class UserView {
         }
 
     
-        while (true) {
+        while (!passwordValid) {
             System.out.print("Enter your password : ");
             password = scanner.next();
             
             if (userController.isValidPassword(password)) {
                 user.setPassword(password);
-                break;
-            }
-            System.out.println("Invalid your password must"
-                              + " contain (a-ZA-Z0-9@#$%^&+=) "
-                              + "range must be 8-20");                
+                passwordValid = true;
+            } else { 
+                System.out.println("Invalid your password must"
+                                     + " contain (a-ZA-Z0-9@#$%^&+=) "
+                                     + "range must be 8-20");    
+            }            
         }    
+
         System.out.println("Set user name to keep your account unique");
 
-        while (userNameValid) {
+        while (!userNameValid) {
             System.out.print("UserName : ");
             userName = scanner.next();
             
             if (!userController.isUsernameExist(userName)) {
-                userNameValid = false;    
+                userNameValid = true;    
             } else {
                 System.out.println("UserName is already exist Enter a new one");                
             } 
@@ -125,33 +130,33 @@ public class UserView {
         }                          
     } 
     
-    //Shows the home page to the user
+    /**  
+     * Shows the home page to the user 
+     */
     public void showHomePage(){
         int selectedOption;
-        final int CREATE_ACCOUNT = 1;
-        final int LOGIN = 2;
-        final int EXIT = 3;
         boolean appRunning = true;
         StringBuilder statement = new StringBuilder();
-        statement.append("\nEnter ").append(CREATE_ACCOUNT)
+        statement.append("\nEnter ").append(Constants.CREATE_ACCOUNT)
                  .append(" --> To Create a new account ").append("\nEnter ")
-                 .append(LOGIN).append(" --> To login ")
-                 .append("\nEnter ").append(EXIT).append(" --> To quit ");
+                 .append(Constants.LOGIN).append(" --> To login ")
+                 .append("\nEnter ").append(Constants.EXIT_HOMEPAGE)
+                 .append(" --> To quit ");
     
         while (appRunning) {
             System.out.println(statement);
             selectedOption = scanner.nextInt();
            
             switch (selectedOption) {
-            case CREATE_ACCOUNT:
+            case Constants.CREATE_ACCOUNT:
                 createAccount();
                 break;
 
-            case LOGIN:
+            case Constants.LOGIN:
                 login();
                 break;
 
-            case EXIT:
+            case Constants.EXIT_HOMEPAGE:
                 appRunning = false;
                 break;
 

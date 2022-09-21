@@ -1,6 +1,7 @@
 package com.ideas2it.view;
 
 import java.util.Scanner;
+import com.ideas2it.constant.Constants;
 
 /**
  * Shows the feed page to user based on the user action
@@ -26,35 +27,33 @@ public class FeedView {
      *
      * @param userId
      */
-    public void showNewsFeed(int userId) {
+    public void showNewsFeed(String userId) {
         int action;
-        final int SHOW_POST = 1;
-        final int SHOW_PROFILE = 2;
-        final int LOGUT = 3;
         boolean newsFeedRunning = true;
         StringBuilder statement = new StringBuilder();
-        statement.append("\nEnter ").append(SHOW_POST)
+        statement.append("\nEnter ").append(Constants.SHOW_POST)
                  .append(" --> To View Post ").append("\nEnter ")
-                 .append(SHOW_PROFILE).append(" --> To view your profile ")
-                 .append("\nEnter ").append(LOGUT).append(" --> To Logout");
-
+                 .append(Constants.SHOW_PROFILE)
+                 .append(" --> To view your profile ")
+                 .append("\nEnter ").append(Constants.LOGUT)
+                 .append(" --> To Logout");
     
         while (newsFeedRunning) {
             System.out.println(statement);
             action = scanner.nextInt();
             
             switch (action) {
-            case SHOW_POST:
+            case Constants.SHOW_POST:
                 postView.displayPost(userId);
                 break;
             
-            case SHOW_PROFILE:
+            case Constants.SHOW_PROFILE:
                 scanner.nextLine();
                 profileView.displayProfilePage(userId);
                 //postView.displayMyPost(userName);
                 break;
    
-            case LOGUT:
+            case Constants.LOGUT:
                 newsFeedRunning = false;
                 break;
             }

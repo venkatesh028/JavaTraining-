@@ -1,18 +1,17 @@
 package com.ideas2it.dao;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.ideas2it.model.Profile;
 
-public class ProfileDao {
-    private static Map<Integer, Profile> userProfiles;
-    private Profile profile;
+/**
+ * Perform the Set, update, view function for the profile
+ *
+ * @version 1.0 19-SEP-2022
+ * @author Venkatesh TM
+ */
+public interface ProfileDao {
 
-    static {
-        userProfiles = new HashMap<>();
-    }
-    
     /** 
      * Create a profile with the user details 
      *
@@ -21,12 +20,8 @@ public class ProfileDao {
      * @param  name     name of the user
      * @return boolean  true after setuping the profile 
      */
-    public boolean setProfile(int userId, String userName, String name) {
-        profile = new Profile(userName, name);
-        userProfiles.put(userId, profile);
-        return true;   
-    }
-    
+    public boolean setProfile(String userId, String userName, String name);
+   
     /**
      * update the name of the user
      * 
@@ -34,24 +29,16 @@ public class ProfileDao {
      * @param  newName new name given by the user
      * @return boolean true after updateing the name
      */
-    public boolean updateName(int userId, String newName) {
-        profile = userProfiles.get(userId);
-        profile.setName(newName);
-        return true;
-    }
-
+    public boolean updateName(String userId, String newName);
+    
     /**
      * update the username of the user
      * 
      * @param  userId  userid of the user
      * @param  newUserName new username given by the user
      * @return boolean true after updateing the username
-     */  
-    public boolean updateUserName(int userId, String newUserName) {
-        profile = userProfiles.get(userId);
-        profile.setUserName(newUserName);
-        return true;
-    }
+     */
+    public boolean updateUserName(String userId, String newUserName);
 
     /**
      * update the bio of the user
@@ -60,24 +47,20 @@ public class ProfileDao {
      * @param  bio     bio given by the user
      * @return boolean true after updateing the name
      */
-    public boolean updateBio(int userId, String bio) {
-        profile = userProfiles.get(userId);
-        profile.setBio(bio);
-        return true;
-    }
-    
+    public boolean updateBio(String userId, String bio);
+
     /**
      * shows the profile to the user
      *
      * @param  userID  userid of the user
      * @return profile profile of the user
      */
-    public Profile showProfile(int userId) {
-        return userProfiles.get(userId);
-    }
+    public Profile showProfile(String userId);
     
-    public Map<Integer, Profile> getUserProfiles() {
-        return userProfiles;
-    }
-    
+    /** 
+     * Gets the UserProfile
+     *
+     * @return userProfile based on userid
+     */
+    public Map<String, Profile> getUserProfiles();
 }

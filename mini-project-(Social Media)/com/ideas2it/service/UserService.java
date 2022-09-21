@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import com.ideas2it.model.User;
 import com.ideas2it.dao.UserDao;
+import com.ideas2it.dao.daoImpl.UserDaoImpl;
 import com.ideas2it.util.ValidationUtil;
-import com.ideas2it.constant.Pattern;
+
 
 /**
  * Perform the create, delete ,change and validation
@@ -18,20 +20,16 @@ import com.ideas2it.constant.Pattern;
  * @version 1.0 08-SEP-2022
  */
 public class UserService {
-    private static Map<Integer, User> users;
+    private static Map<String, User> users;
     private static Set<String> userNames;
-    private static Map<String, Integer> loginCredentials;
-    private static int id;
+    private static Map<String, String> loginCredentials;
+    private String userId;
     private ValidationUtil validationUtil;
     private User user;
     private UserDao userDao;
 
-    static {
-        id = 0;
-    }
-
     public UserService() {
-        this.userDao = new UserDao();
+        this.userDao = new UserDaoImpl();
         this.validationUtil = new ValidationUtil();
     }
 
@@ -43,8 +41,8 @@ public class UserService {
      * @return boolean  true after adding the user in map
      */
     public boolean createAccount(String userName, User user) {
-        userDao.createAccount(id, userName, user);
-        id++;          
+        userId = UUID.randomUUID().toString();
+        userDao.createAccount(userId, userName, user);          
         return true;
     }
     
@@ -85,7 +83,7 @@ public class UserService {
      * @return boolean true or false based on the result
      */  
     public boolean isValidEmail(String email) {
-        return validationUtil.isValid(email, Pattern.emailFormat);
+        return validationUtil.isValidEmail(email);
     }
     
     /**
@@ -95,7 +93,7 @@ public class UserService {
      * @return boolean  true or false based on the result 
      */
     public boolean isValidPassword(String password) {
-        return validationUtil.isValid(password, Pattern.passwordFormat);
+        return validationUtil.isValidPassword(password);
     }
     
     /**
@@ -126,7 +124,7 @@ public class UserService {
      * @param  email   email entered by the user
      * @return boolean true or false based on the result
      */
-    public int getUserId(String email) {
+    public String getUserId(String email) {
         loginCredentials = userDao.getLoginCredentials();
         return loginCredentials.get(email);
     }

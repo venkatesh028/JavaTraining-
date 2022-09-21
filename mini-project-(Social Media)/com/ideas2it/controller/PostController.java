@@ -27,8 +27,8 @@ public class PostController {
      * @param  quotes   quotes entered by the user
      * @return boolean  true after adding the post
      */
-    public boolean addPost(String userName, String quotes) {
-        return postService.addPost(userName, quotes);
+    public boolean addPost(String userId, String quotes) {
+        return postService.addPost(userId, quotes);
     }
     
     /**
@@ -40,7 +40,7 @@ public class PostController {
      * @return boolean        true after adding the like 
      */ 
     public boolean addLike(String likedUserName, String userNameOfPost,
-                            int postNumber) {
+                               int postNumber) {
         return postService.addLike(likedUserName, userNameOfPost, postNumber);
     }
     
