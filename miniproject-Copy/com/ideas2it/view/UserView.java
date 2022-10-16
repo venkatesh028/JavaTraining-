@@ -74,6 +74,7 @@ public class UserView {
     public void createAccount() {
         User user = new User();
         Profile profile = new Profile();
+        String profileId;
         int age;
 
         user.setEmail(getEmail());  

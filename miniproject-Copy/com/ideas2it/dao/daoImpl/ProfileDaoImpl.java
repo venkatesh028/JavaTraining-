@@ -1,7 +1,11 @@
 package com.ideas2it.dao.daoImpl;
 
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
+
+import com.ideas2it.model.Profile;
+import com.ideas2it.dao.ProfileDao;
 
 /**
  * Perform the creation, Read , update and Delete for the profile 

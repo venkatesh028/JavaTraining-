@@ -21,7 +21,7 @@ public class ProfileController {
     }
      
     public String getUserId(String profileId) {
-        return profileService.getUserId(profileId)
+        return profileService.getUserId(profileId);
     }
 
     /**
