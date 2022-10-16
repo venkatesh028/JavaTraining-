@@ -88,7 +88,7 @@ public class UserView {
             profile.setUserName(getUserName());       
             user.setProfile(profile);
 
-            if (userController.create(user) == null) { 
+            if ((userController.create(user) == null) && (null == profileController.create(profile))) { 
                 userId = userController.getUserId(user.getEmail()); 
                 profileId = profileController.getProfileId(userId);                 
                 System.out.println("Account Created Succesfully");
@@ -131,26 +131,8 @@ public class UserView {
                 System.out.println("you entered wrong choice "); 
             }            
         }       
-    }
-    
-    /** 
-     * Get name from the user
-     * And validate it 
-     * 
-     * @return name name of the user if it is valid
-     */
-    private String getName() {
-        boolean isValid = false;
-        String name = "";
- 
-        while(!isValid) {
-            System.out.print("\nEnter your Name : ");
-            name = scanner.nextLine();
-            isValid = userController.isValidName(name);
-        }
-        return name;
-    }
-    
+    }  
+
     /**
      * Get dateofBirth of the user
      * And Validate it

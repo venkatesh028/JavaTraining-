@@ -16,6 +16,11 @@ public class ProfileController {
         this.profileService = new ProfileService();
     }
     
+
+    public Profile create(Profile profile) {
+        return profileService.create(profile);
+    }
+    
     public String getProfileId(String userId) {
         return profileService.getProfileId(userId);
     }
