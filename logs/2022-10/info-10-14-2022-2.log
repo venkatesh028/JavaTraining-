@@ -1,0 +1,33 @@
+2022-10-14 11:27:00,267 WARN c.i.v.UserView [main] Invalid date format
+
+2022-10-14 11:27:33,460 WARN c.i.v.UserView [main] Invalid email format
+
+2022-10-14 11:32:18,260 WARN c.i.v.UserView [main] Email Already exist
+
+2022-10-14 11:32:22,584 WARN c.i.v.UserView [main] Invalid email format
+
+2022-10-14 11:32:27,238 WARN c.i.v.UserView [main] Invalid email format
+
+2022-10-14 12:11:53,551 WARN c.i.v.UserView [main] Invalid date format
+
+2022-10-14 12:14:34,759 WARN c.i.v.PostView [main] You entered wrong option
+2022-10-14 14:11:28,670 WARN c.i.v.PostView [main] You entered wrong option
+2022-10-14 16:02:07,095 WARN c.i.v.PostView [main] You entered wrong option
+2022-10-14 16:17:34,434 WARN c.i.v.UserView [main] Invalid email format
+
+2022-10-14 16:29:29,231 WARN c.i.v.UserView [main] Invalid date format
+
+2022-10-14 17:26:41,492 WARN c.i.v.UserView [main] Invalid email format
+
+2022-10-14 17:28:59,447 WARN c.i.v.UserView [main] Invalid username
+
+2022-10-14 17:29:05,463 WARN c.i.v.UserView [main] Invalid username
+
+2022-10-14 17:29:12,804 WARN c.i.v.UserView [main] Invalid username
+
+2022-10-14 17:29:19,791 WARN c.i.v.UserView [main] Invalid username
+
+2022-10-14 17:32:43,018 WARN c.i.v.UserView [main] Invalid username
+
+2022-10-14 17:32:52,409 WARN c.i.v.UserView [main] Invalid username
+
