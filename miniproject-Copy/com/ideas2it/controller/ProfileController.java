@@ -105,4 +105,8 @@ public class ProfileController {
     public boolean addFriend(String userId, String friendName) {
         return profileService.addFriend(userId, friendName);     
     }
+
+    public Profile delete(String profileId) {
+        return profileService.delete(profileId);
+    }
 } 

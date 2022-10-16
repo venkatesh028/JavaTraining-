@@ -5,6 +5,7 @@ public class Like {
     private String postId;
     private String likedUserId;
     
+     
     public Like(String likedUserId) {
         this.likedUserId = likedUserId;
     }

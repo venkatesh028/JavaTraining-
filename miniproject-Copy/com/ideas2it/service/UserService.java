@@ -45,11 +45,9 @@ public class UserService {
      */
     public User create(User user) {
         String userId;
-        String profileId;
 
         userId = UUID.randomUUID().toString();
-        user.setUserId(userId);
-        user.getProfile().setProfileId(profileId);
+        user.setUserId(userId);        
         return userDao.create(user);
     }
     

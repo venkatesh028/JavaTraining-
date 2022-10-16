@@ -2,6 +2,7 @@ package com.ideas2it.dao.daoImpl;
 
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.ideas2it.model.Profile;
@@ -15,12 +16,13 @@ import com.ideas2it.dao.ProfileDao;
  */
 public class ProfileDaoImpl implements ProfileDao {
     private Map<String, Profile> profiles;
+    private static ProfileDaoImpl profileDaoImpl;
     
     private ProfileDaoImpl() {
         this.profiles = new HashMap<>();
     }
     
-    public static synchronized UserDaoImpl getInstance() {
+    public static synchronized ProfileDaoImpl getInstance() {
         if (profileDaoImpl == null) {
             profileDaoImpl = new ProfileDaoImpl();        
         }
@@ -36,11 +38,11 @@ public class ProfileDaoImpl implements ProfileDao {
     }
     
     public List<Profile> getProfiles() {
-        return profiles.values();
+        return new ArrayList<>(profiles.values());
     }
      
     public Profile update(Profile profile) {
-        return profiles.replace(profile.getProfileId, profile);
+        return profiles.replace(profile.getProfileId(), profile);
     }
 
     public Profile delete(String profileId) {

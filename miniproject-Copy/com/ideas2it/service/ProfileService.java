@@ -2,10 +2,12 @@ package com.ideas2it.service;
 
 import java.util.UUID;
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import com.ideas2it.dao.ProfileDao;
-import com.ideas2it.daoImpl.ProfileDaoImpl;
+import com.ideas2it.dao.daoImpl.ProfileDaoImpl;
 import com.ideas2it.model.Profile;
 
 /** 
@@ -20,7 +22,6 @@ public class ProfileService {
 
     public ProfileService() {
         this.profileDao = ProfileDaoImpl.getInstance();
-        this.userService = new UserService();
     }
     
     public Profile create(Profile profile) {
@@ -51,7 +52,7 @@ public class ProfileService {
     public boolean updateUserName(String profileId, String newUserName) {
         profile = profileDao.getProfile(profileId);
         profile.setUserName(newUserName);
-        profileDao.update(profileId, profile);
+        profileDao.update(profile);
         return true;     
     }
     
@@ -76,7 +77,7 @@ public class ProfileService {
      */
     public String getUserName(String profileId) {
         Profile profile = profileDao.getProfile(profileId);
-        return profile.getUserName(profileId);
+        return profile.getUserName();
     }
 
     /**
@@ -105,9 +106,9 @@ public class ProfileService {
      * @return boolean true after changing the visibility
      */
     public boolean changeVisibility(String profileId, boolean isPrivate) {
-        profile = profileDaoImpl.getProfile(profileId );
+        profile = profileDao.getProfile(profileId );
         profile.setPrivate(isPrivate);
-        profileDaoImpl.update(profile);
+        profileDao.update(profile);
         return true;
     }
     
@@ -121,7 +122,7 @@ public class ProfileService {
     public boolean addFriend(String profileId , String friendName) {
         profile = profileDao.getProfile(profileId );
         profile.setFriend(friendName);
-        profleDao.update(profile);
+        profileDao.update(profile);
         return true;
     }
 
@@ -133,11 +134,11 @@ public class ProfileService {
      */
     public boolean isUserNameExist(String userName) {
         Set<String> existingData =  new HashSet<>();
-        Profile profiles;
+        List<Profile> profiles;
         profiles = profileDao.getProfiles();
 
         for (Profile profile : profiles) {
-            existingData.add(user.getProfile().getUserName());        
+            existingData.add(profile.getUserName());        
         }
         return existingData.contains(userName);
     }
@@ -150,7 +151,7 @@ public class ProfileService {
      */
     public String getProfileId(String userId) {
         List<Profile> profiles = new ArrayList<>(profileDao.getProfiles());
-        String profileId;
+        String profileId = null;
 
         for (Profile profile : profiles) {
             if (profile.getUserId().equals(userId)) {
@@ -162,7 +163,7 @@ public class ProfileService {
     
     public String getUserId(String profileId) {
         List<Profile> profiles = new ArrayList<>(profileDao.getProfiles());
-        String userId;
+        String userId = null;
 
         for (Profile profile : profiles) {
             if (profile.getProfileId().equals(profileId)) {
@@ -170,5 +171,9 @@ public class ProfileService {
             }
         } 
         return userId;    
+    }
+
+    public Profile delete(String profileId) {
+        return profileDao.delete(profileId) ;
     }   
 }

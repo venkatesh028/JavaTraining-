@@ -34,8 +34,9 @@ public class SettingView {
      *
      * @param userId - userId of the user
      */
-    private void deleteAccount(String userId) {
+    private void deleteAccount(String userId, String profileId) {
         userController.delete(userId);
+        profileController.delete(profileId);
     }
     
     /**

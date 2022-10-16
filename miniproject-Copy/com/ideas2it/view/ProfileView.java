@@ -54,7 +54,7 @@ public class ProfileView {
                     System.out.print("Enter the UserName : ");
                     newUserName = scanner.nextLine();
                     
-                    if (!userController.isUserNameExist(newUserName)) {
+                    if (!profileController.isUserNameExist(newUserName)) {
                         profileController.updateUserName(userId, newUserName);
                         userNameValid = true;
                     } else {  
@@ -128,7 +128,7 @@ public class ProfileView {
         String profileMenu = generateProfileMenu();               
 
         while (profilePage) {   
-            showProfile(userId); 
+            showProfile(profileId); 
             showPostByUserName(profileId);
             System.out.println(profileMenu);
             selectedOption = getOption();
