@@ -1,3 +1,3 @@
 # JavaTraining-
 Java programs
-Smaple
+Sample
